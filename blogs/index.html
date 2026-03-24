@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>As you know — Blog</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: #fff;
+      color: #1a1a1a;
+      min-height: 100vh;
+    }
+
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: #fff;
+      border-bottom: 1px solid #e8e8e8;
+      padding: 0 24px;
+      display: flex;
+      align-items: center;
+      height: 56px;
+    }
+    .nav-logo {
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      color: #1a1a1a;
+      text-decoration: none;
+    }
+
+    .page {
+      max-width: 740px;
+      margin: 0 auto;
+      padding: 64px 24px 80px;
+    }
+
+    .page-header {
+      margin-bottom: 48px;
+      border-bottom: 1px solid #e8e8e8;
+      padding-bottom: 32px;
+    }
+    .page-eyebrow {
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: #aaa;
+      margin-bottom: 12px;
+    }
+    .page-title {
+      font-size: 28px;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      line-height: 1.2;
+      margin-bottom: 10px;
+    }
+    .page-desc {
+      font-size: 15px;
+      color: #6b6b6b;
+      line-height: 1.6;
+    }
+
+    /* post list */
+    .post-list {
+      display: flex;
+      flex-direction: column;
+    }
+    .post-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 20px;
+      padding: 24px 0;
+      border-bottom: 1px solid #f0f0f0;
+      text-decoration: none;
+      color: inherit;
+      transition: opacity 0.15s;
+    }
+    .post-item:last-child { border-bottom: none; }
+    .post-item:hover { opacity: 0.72; }
+
+    .post-index {
+      flex-shrink: 0;
+      font-size: 13px;
+      font-weight: 700;
+      color: #ccc;
+      width: 24px;
+      padding-top: 3px;
+    }
+
+    .post-body { flex: 1; }
+
+    .post-tags {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      margin-bottom: 8px;
+    }
+    .post-tag {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      color: #888;
+      background: #f2f2f2;
+      padding: 2px 8px;
+      border-radius: 4px;
+    }
+
+    .post-title {
+      font-size: 17px;
+      font-weight: 700;
+      line-height: 1.3;
+      margin-bottom: 6px;
+      color: #1a1a1a;
+    }
+    .post-excerpt {
+      font-size: 14px;
+      color: #6b6b6b;
+      line-height: 1.6;
+      margin-bottom: 10px;
+    }
+    .post-meta {
+      font-size: 12px;
+      color: #bbb;
+    }
+
+    .post-arrow {
+      flex-shrink: 0;
+      color: #ccc;
+      font-size: 18px;
+      padding-top: 2px;
+      transition: color 0.15s;
+    }
+    .post-item:hover .post-arrow { color: #1a1a1a; }
+
+    @media (max-width: 600px) {
+      .page-title { font-size: 22px; }
+      .post-title { font-size: 16px; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="index.html">As you know</a>
+</nav>
+
+<main class="page">
+
+  <header class="page-header">
+    <p class="page-eyebrow">System Design · Backend</p>
+    <h1 class="page-title">Những bài toán thực tế ở tầm Senior</h1>
+    <p class="page-desc">Không phải tutorial. Không phải hello world. Là những vấn đề bạn sẽ gặp thật sự trong môi trường production — và cách người ta giải quyết chúng.</p>
+  </header>
+
+  <div class="post-list">
+
+    <a class="post-item" href="blogs/upload-file-problem">
+      <span class="post-index">01</span>
+      <div class="post-body">
+        <div class="post-tags">
+          <span class="post-tag">Upload</span>
+          <span class="post-tag">Streaming</span>
+          <span class="post-tag">CDN</span>
+        </div>
+        <div class="post-title">Upload 10GB & Stream cho 1000 Users — Hệ thống không sập như thế nào?</div>
+        <div class="post-excerpt">Presigned URL, Chunked Upload, HLS Transcoding, CDN Edge Cache — và tất cả những gì xảy ra bên dưới khi bạn upload một video lên YouTube.</div>
+        <div class="post-meta">24 tháng 3, 2026</div>
+      </div>
+      <span class="post-arrow">→</span>
+    </a>
+
+    <a class="post-item" href="blogs/pagination-problem">
+      <span class="post-index">02</span>
+      <div class="post-body">
+        <div class="post-tags">
+          <span class="post-tag">Database</span>
+          <span class="post-tag">Pagination</span>
+          <span class="post-tag">Performance</span>
+        </div>
+        <div class="post-title">Paging 2 Triệu Dòng Dữ Liệu — Tại sao OFFSET chết và giải pháp thay thế</div>
+        <div class="post-excerpt">OFFSET không phải phân trang — đó là bắt database đọc và vứt đi hàng triệu dòng. Keyset Pagination, Deferred Join, và Elasticsearch là câu trả lời thực sự.</div>
+        <div class="post-meta">24 tháng 3, 2026</div>
+      </div>
+      <span class="post-arrow">→</span>
+    </a>
+
+    <a class="post-item" href="blogs/overselling-problem">
+      <span class="post-index">03</span>
+      <div class="post-body">
+        <div class="post-tags">
+          <span class="post-tag">Flash Sale</span>
+          <span class="post-tag">Concurrency</span>
+          <span class="post-tag">Redis</span>
+        </div>
+        <div class="post-title">Overselling — Tại sao hệ thống bán lố hàng và 4 lớp phòng thủ để chống lại</div>
+        <div class="post-excerpt">Kho có 100 chiếc, 1 triệu người mua cùng lúc. Race Condition, Pessimistic Lock, Optimistic Lock, Redis Lua Script, Waiting Room, Idempotency Key — mỗi lớp bảo vệ một loại lỗi khác nhau.</div>
+        <div class="post-meta">24 tháng 3, 2026</div>
+      </div>
+      <span class="post-arrow">→</span>
+    </a>
+
+  </div>
+
+</main>
+
+</body>
+</html>
