@@ -1,25 +1,33 @@
 (function () {
+  // Thêm bài mới vào đây — slug phải khớp với tên folder trên Vercel
   const POSTS = [
     {
-      href: '/blogs/upload-file-problem',
+      slug: 'upload-file-problem',
       title: 'Upload 10GB & Stream cho 1000 Users',
     },
     {
-      href: '/blogs/pagination-problem',
+      slug: 'pagination-problem',
       title: 'Paging 2 Triệu Dòng Dữ Liệu',
     },
     {
-      href: '/blogs/overselling-problem',
+      slug: 'overselling-problem',
       title: 'Overselling — Flash Sale & Race Condition',
     },
   ];
 
-  function getCurrentPage() {
-    return window.location.pathname.split('/').pop() || 'index.html';
+  // Lấy tên folder hiện tại từ URL path (hoạt động cả localhost lẫn Vercel)
+  function getCurrentSlug() {
+    const parts = window.location.pathname.replace(/\/$/, '').split('/');
+    return parts[parts.length - 1] || '';
+  }
+
+  // Href trỏ về folder anh em (../slug/) — dùng cho các trang nằm trong subfolder
+  function getHref(slug) {
+    return '../' + slug + '/';
   }
 
   function render() {
-    const current = getCurrentPage();
+    const current = getCurrentSlug();
 
     const style = document.createElement('style');
     style.textContent = `
@@ -113,10 +121,10 @@
     sidebar.id = 'blog-sidebar';
 
     const items = POSTS.map(function (post, i) {
-      const isActive = current === post.href;
+      const isActive = current === post.slug;
       return (
         '<li>' +
-        '<a href="' + post.href + '" class="sidebar-post-link' + (isActive ? ' active' : '') + '">' +
+        '<a href="' + getHref(post.slug) + '" class="sidebar-post-link' + (isActive ? ' active' : '') + '">' +
         '<span class="sidebar-post-num">0' + (i + 1) + '</span>' +
         post.title +
         '</a>' +
