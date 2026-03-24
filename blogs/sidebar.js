@@ -1,15 +1,15 @@
 (function () {
   const POSTS = [
     {
-      href: 'upload-file.html',
+      href: '/blogs/upload-file-problem',
       title: 'Upload 10GB & Stream cho 1000 Users',
     },
     {
-      href: 'pagination.html',
+      href: '/blogs/pagination-problem',
       title: 'Paging 2 Triệu Dòng Dữ Liệu',
     },
     {
-      href: 'ban-lo-hang.html',
+      href: '/blogs/overselling-problem',
       title: 'Overselling — Flash Sale & Race Condition',
     },
   ];
