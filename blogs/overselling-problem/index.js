@@ -330,7 +330,7 @@
 <body>
 
 <nav>
-  <a class="nav-logo" href="#">As you know</a>
+  <a class="nav-logo" href="index.html">As you know</a>
   <span class="nav-tag">Backend · Concurrency</span>
 </nav>
 
@@ -666,5 +666,6 @@ Idempotency-Key: <span class="st">"a1b2c3d4-e5f6-7890-abcd-ef1234567890"</span>
 
 </article>
 
+<script src="../../sidebar.js"></script>
 </body>
 </html>
