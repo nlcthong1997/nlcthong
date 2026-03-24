@@ -1,1 +1,698 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Paging 2 Triệu Dòng Dữ Liệu — Bài toán Deep Pagination</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: #fff;
+      color: #1a1a1a;
+      line-height: 1.8;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: #fff;
+      border-bottom: 1px solid #e8e8e8;
+      padding: 0 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 56px;
+    }
+    .nav-logo {
+      font-family: 'Inter', sans-serif;
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      color: #1a1a1a;
+      text-decoration: none;
+    }
+    .nav-tag {
+      font-size: 13px;
+      color: #6b6b6b;
+      background: #f2f2f2;
+      border-radius: 100px;
+      padding: 4px 12px;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      max-width: 740px;
+      margin: 56px auto 0;
+      padding: 0 24px;
+    }
+    .hero-tag {
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: #6b6b6b;
+      margin-bottom: 20px;
+    }
+    h1 {
+      font-size: clamp(24px, 4vw, 36px);
+      font-weight: 700;
+      line-height: 1.2;
+      letter-spacing: -1px;
+      color: #1a1a1a;
+      margin-bottom: 20px;
+    }
+    .subtitle {
+      font-size: 17px;
+      color: #3d3d3d;
+      line-height: 1.6;
+      margin-bottom: 32px;
+    }
+
+    /* ── META ── */
+    .meta {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 16px 0;
+      border-top: 1px solid #e8e8e8;
+      border-bottom: 1px solid #e8e8e8;
+      margin-bottom: 48px;
+      font-size: 13px;
+      color: #6b6b6b;
+    }
+    .avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: #1a1a1a;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-weight: 700;
+      font-size: 16px;
+      flex-shrink: 0;
+    }
+    .meta-info { display: flex; flex-direction: column; gap: 2px; }
+    .meta-author { font-weight: 600; color: #1a1a1a; }
+
+    /* ── ARTICLE ── */
+    article {
+      max-width: 740px;
+      margin: 0 auto;
+      padding: 0 24px 80px;
+      font-size: 16px;
+    }
+
+    .lead {
+      font-size: 17px;
+      line-height: 1.7;
+      border-left: 3px solid #1a1a1a;
+      padding-left: 24px;
+      margin-bottom: 48px;
+      color: #2a2a2a;
+    }
+
+    h2 {
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      margin: 56px 0 16px;
+      line-height: 1.3;
+    }
+    h3 {
+      font-size: 17px;
+      font-weight: 700;
+      margin: 36px 0 12px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    h3 .badge {
+      background: #1a1a1a;
+      color: #fff;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      padding: 3px 9px;
+      border-radius: 4px;
+    }
+
+    p { margin-bottom: 24px; }
+
+    /* callout boxes */
+    .callout {
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin: 24px 0;
+      font-size: 14px;
+      line-height: 1.7;
+    }
+    .callout-danger {
+      background: #fff5f5;
+      border-left: 4px solid #e53e3e;
+      color: #2d2d2d;
+    }
+    .callout-danger strong { color: #c53030; }
+    .callout-info {
+      background: #f7f7f7;
+      border-left: 4px solid #1a1a1a;
+      color: #2d2d2d;
+    }
+    .callout-tip {
+      background: #f0fff4;
+      border-left: 4px solid #38a169;
+      color: #2d2d2d;
+    }
+    .callout-tip strong { color: #276749; }
+    .callout-warn {
+      background: #fffbeb;
+      border-left: 4px solid #d97706;
+      color: #2d2d2d;
+    }
+    .callout-warn strong { color: #92400e; }
+
+    /* step list */
+    .steps {
+      list-style: none;
+      margin: 24px 0 32px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .steps li {
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+      font-size: 15px;
+      line-height: 1.6;
+    }
+    .step-num {
+      flex-shrink: 0;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: #1a1a1a;
+      color: #fff;
+      font-size: 13px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 1px;
+    }
+    .steps li strong { color: #1a1a1a; }
+
+    /* code blocks */
+    code {
+      background: #f2f2f2;
+      border-radius: 4px;
+      padding: 2px 7px;
+      font-family: 'Menlo', 'Consolas', monospace;
+      font-size: 13px;
+      color: #1a1a1a;
+    }
+    pre {
+      background: #1a1a1a;
+      color: #e8e8e8;
+      border-radius: 8px;
+      padding: 20px 24px;
+      margin: 24px 0;
+      overflow-x: auto;
+      font-family: 'Menlo', 'Consolas', monospace;
+      font-size: 13px;
+      line-height: 1.7;
+    }
+    pre .cm  { color: #888; }   /* comment */
+    pre .kw  { color: #c792ea; } /* keyword */
+    pre .fn  { color: #82aaff; } /* function/clause */
+    pre .st  { color: #c3e88d; } /* string/value */
+    pre .nu  { color: #f78c6c; } /* number */
+    pre .hl  { background: rgba(255,255,255,0.08); display: block; border-left: 3px solid #e53e3e; padding-left: 6px; margin-left: -6px; }
+
+    /* flow diagram */
+    .flow {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin: 20px 0 28px;
+      background: #f7f7f7;
+      border-radius: 10px;
+      padding: 14px 18px;
+      font-size: 12px;
+      font-weight: 500;
+    }
+    .flow-row {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+    .flow-box {
+      background: #1a1a1a;
+      color: #fff;
+      padding: 5px 11px;
+      border-radius: 5px;
+      white-space: nowrap;
+    }
+    .flow-arrow { color: #bbb; font-size: 14px; }
+    .flow-box.ghost { background: #e4e4e4; color: #444; }
+    .flow-box.highlight {
+      background: #1a1a1a;
+      outline: 2px dashed #888;
+      outline-offset: 2px;
+    }
+    .flow-box.bad { background: #e53e3e; }
+    .flow-box.good { background: #38a169; }
+
+    /* comparison table */
+    .compare {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+      margin: 24px 0 32px;
+    }
+    .compare th {
+      text-align: left;
+      padding: 10px 14px;
+      background: #1a1a1a;
+      color: #fff;
+      font-weight: 600;
+    }
+    .compare th:first-child { border-radius: 8px 0 0 0; }
+    .compare th:last-child  { border-radius: 0 8px 0 0; }
+    .compare td {
+      padding: 10px 14px;
+      border-bottom: 1px solid #e8e8e8;
+      vertical-align: top;
+      line-height: 1.6;
+    }
+    .compare tr:last-child td { border-bottom: none; }
+    .compare tr:nth-child(even) td { background: #fafafa; }
+    .yes { color: #276749; font-weight: 600; }
+    .no  { color: #c53030; font-weight: 600; }
+
+    /* summary table */
+    .summary {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+      margin: 24px 0;
+    }
+    .summary th {
+      text-align: left;
+      padding: 10px 14px;
+      background: #1a1a1a;
+      color: #fff;
+      font-weight: 600;
+    }
+    .summary th:first-child { border-radius: 8px 0 0 0; }
+    .summary th:last-child  { border-radius: 0 8px 0 0; }
+    .summary td {
+      padding: 10px 14px;
+      border-bottom: 1px solid #e8e8e8;
+      vertical-align: top;
+      line-height: 1.6;
+    }
+    .summary tr:last-child td { border-bottom: none; }
+    .summary tr:nth-child(even) td { background: #fafafa; }
+
+    /* divider */
+    hr {
+      border: none;
+      border-top: 1px solid #e8e8e8;
+      margin: 56px 0;
+    }
+
+    /* tag chips */
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 48px;
+    }
+    .tag {
+      background: #f2f2f2;
+      color: #444;
+      font-size: 13px;
+      padding: 6px 14px;
+      border-radius: 100px;
+    }
+
+    @media (max-width: 600px) {
+      h2 { font-size: 20px; }
+      article { font-size: 15px; }
+      .lead { font-size: 16px; }
+      pre { font-size: 12px; padding: 14px 16px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="#">As you know</a>
+  <span class="nav-tag">Database · Performance</span>
+</nav>
+
+<!-- HERO -->
+<header class="hero">
+  <p class="hero-tag">Database · Pagination · System Design</p>
+  <h1>Paging 2 Triệu Dòng Dữ Liệu — Tại sao OFFSET chết và giải pháp thay thế</h1>
+  <p class="subtitle">Câu hỏi phỏng vấn Senior chắc chắn gặp. Câu trả lời không phải là "thêm RAM" hay "tăng instance" — mà là hiểu cách database thực sự hoạt động bên trong.</p>
+  <div class="meta">
+    <div class="avatar">T</div>
+    <div class="meta-info">
+      <span class="meta-author">Thong Nguyen</span>
+      <span>24 tháng 3, 2026</span>
+    </div>
+  </div>
+</header>
+
+<!-- ARTICLE -->
+<article>
+
+  <p class="lead">
+    Khi dữ liệu chỉ có vài nghìn dòng, mọi cách paging đều chạy nhanh. Vấn đề chỉ lộ ra khi bảng có hàng triệu dòng và user cố nhảy đến trang cuối. Lúc đó, cách làm thông thường sẽ khiến query chạy <em>hàng chục giây</em> — hoặc timeout hoàn toàn.
+  </p>
+
+  <!-- ═══════════════════ VẤN ĐỀ ══ -->
+  <h2>Vấn đề cốt lõi: Tại sao OFFSET lại "chết"?</h2>
+
+  <p>Cách làm quen thuộc của hầu hết developer khi mới bắt đầu:</p>
+
+  <pre><span class="cm">-- Lấy trang thứ 50,001 (mỗi trang 20 dòng)</span>
+<span class="fn">SELECT</span> * <span class="fn">FROM</span> users
+<span class="fn">ORDER BY</span> created_at <span class="fn">DESC</span>
+<span class="fn">LIMIT</span> <span class="nu">20</span> <span class="fn">OFFSET</span> <span class="nu">1000000</span>;</pre>
+
+  <div class="callout callout-danger">
+    <strong>❌ Sai lầm chết người:</strong> Database <strong>không có phép thuật</strong> để "nhảy bùp" tới dòng thứ 1 triệu. Nó phải <strong>scan toàn bộ 1 triệu dòng đầu tiên</strong>, đếm đủ, vứt đi — rồi mới lấy 20 dòng tiếp theo. Trang càng về sau, query càng chậm theo cấp số nhân. OFFSET 1,000,000 ở một bảng không được tối ưu có thể mất <strong>10–30 giây</strong>.
+  </div>
+
+  <div class="flow">
+    <div class="flow-row">
+      <div class="flow-box bad">Scan 1,000,000 dòng</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-box ghost">Đếm đủ 1M</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-box ghost">Vứt hết 1M dòng</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-box good">Trả về 20 dòng</div>
+    </div>
+  </div>
+
+  <p>Đây gọi là bài toán <strong>Deep Pagination</strong>. Dữ liệu càng lớn, trang càng sâu, hệ thống càng nguy hiểm.</p>
+
+  <div class="callout callout-warn">
+    <strong>⚠️ Bài toán kép — COUNT(*) cũng chậm:</strong> Để hiển thị "Trang 3 / 50,000", bạn cần biết tổng số trang, tức là phải chạy <code>SELECT COUNT(*) FROM users WHERE ...</code>. Trên bảng 2 triệu dòng với điều kiện lọc phức tạp, câu lệnh COUNT này cũng có thể mất vài giây — và thường bị developer bỏ qua khi tối ưu.
+  </div>
+
+  <!-- ═══════════════════ GIẢI PHÁP 1 ══ -->
+  <h2>Giải pháp 1 — Keyset Pagination (Cursor-based)</h2>
+  <p style="margin-top:-8px; color:#6b6b6b; font-size:14px;">Dành cho: Infinite Scroll, Load More, Next/Prev — không cần nhảy trang tự do</p>
+
+  <p>Thay vì nói "bỏ qua N dòng đầu", ta nói "lấy các dòng <em>sau</em> cái id/timestamp cuối cùng tôi đã thấy". Database lúc này chỉ cần dùng Index để tìm đến đúng điểm đó và nhặt ra 20 dòng — không cần scan gì thêm.</p>
+
+  <pre><span class="cm">-- Trang đầu tiên</span>
+<span class="fn">SELECT</span> * <span class="fn">FROM</span> users
+<span class="fn">ORDER BY</span> id <span class="fn">DESC</span>
+<span class="fn">LIMIT</span> <span class="nu">20</span>;
+
+<span class="cm">-- Trang tiếp theo (last_seen_id = ID của dòng cuối trang trước)</span>
+<span class="fn">SELECT</span> * <span class="fn">FROM</span> users
+<span class="fn">WHERE</span> id &lt; <span class="st">:last_seen_id</span>
+<span class="fn">ORDER BY</span> id <span class="fn">DESC</span>
+<span class="fn">LIMIT</span> <span class="nu">20</span>;</pre>
+
+  <div class="callout callout-tip">
+    <strong>✅ Tại sao siêu nhanh?</strong> <br>
+    Cột <code>id</code> có B-Tree Index. Database dùng Index để tìm trực tiếp đến <code>last_seen_id</code> với độ phức tạp O(log n), rồi duyệt tuần tự lấy 20 dòng tiếp theo. <strong>Tốc độ trang 1 và trang 100,000 là gần như bằng nhau.</strong>
+  </div>
+
+  <h3><span class="badge">Bổ sung</span> Sort key phải unique — tránh bẫy timestamp trùng</h3>
+
+  <p>Nếu bạn sort theo <code>created_at</code> thay vì <code>id</code>, hãy cẩn thận: nhiều dòng có thể có cùng timestamp (insert trong cùng 1 giây). Cursor <code>created_at &lt; last_seen_at</code> sẽ bỏ sót dữ liệu.</p>
+
+  <pre><span class="cm">-- ❌ Nguy hiểm: created_at có thể trùng</span>
+<span class="fn">WHERE</span> created_at &lt; <span class="st">:last_seen_at</span>
+
+<span class="cm">-- ✅ An toàn: dùng composite cursor (created_at + id)</span>
+<span class="fn">WHERE</span> (created_at, id) &lt; (<span class="st">:last_seen_at</span>, <span class="st">:last_seen_id</span>)
+<span class="fn">ORDER BY</span> created_at <span class="fn">DESC</span>, id <span class="fn">DESC</span>
+<span class="fn">LIMIT</span> <span class="nu">20</span>;</pre>
+
+  <div class="callout callout-info">
+    <strong>Index cần khớp với sort key:</strong> Để query trên chạy nhanh, cần composite index: <code>CREATE INDEX idx_users_cursor ON users (created_at DESC, id DESC);</code>. Index này được gọi là <strong>Covering Index</strong> — toàn bộ thông tin cần cho việc lọc đều nằm trong Index, không cần đụng vào bảng thật.
+  </div>
+
+  <h3><span class="badge">Bổ sung</span> Phân trang 2 chiều (Previous page)</h3>
+
+  <p>Với Keyset Pagination, "trang trước" không đơn giản như trang sau. Cách phổ biến nhất là lưu <strong>2 cursor</strong> trong response: một cho "next" và một cho "prev".</p>
+
+  <pre><span class="cm">-- Response trả về:</span>
+{
+  <span class="st">"data"</span>: [...],
+  <span class="st">"cursor"</span>: {
+    <span class="st">"next"</span>: <span class="st">"eyJpZCI6MTAwfQ=="</span>,   <span class="cm">// base64({"id": 100})</span>
+    <span class="st">"prev"</span>: <span class="st">"eyJpZCI6MTIwfQ=="</span>    <span class="cm">// base64({"id": 120})</span>
+  },
+  <span class="st">"has_next"</span>: <span class="st">true</span>,
+  <span class="st">"has_prev"</span>: <span class="st">true</span>
+}
+
+<span class="cm">-- Query "trang trước": đảo điều kiện và order, lấy rồi reverse kết quả</span>
+<span class="fn">SELECT</span> * <span class="fn">FROM</span> users
+<span class="fn">WHERE</span> id &gt; <span class="st">:prev_cursor_id</span>
+<span class="fn">ORDER BY</span> id <span class="fn">ASC</span>
+<span class="fn">LIMIT</span> <span class="nu">20</span>;</pre>
+
+  <hr />
+
+  <!-- ═══════════════════ GIẢI PHÁP 2 ══ -->
+  <h2>Giải pháp 2 — Deferred Join (Late Row Lookup)</h2>
+  <p style="margin-top:-8px; color:#6b6b6b; font-size:14px;">Dành cho: UI có nút số trang (1, 2, 3 ... 999) — bắt buộc phải dùng OFFSET</p>
+
+  <p>Khi business yêu cầu "phải có nút nhảy trang", bạn buộc phải dùng OFFSET. Nhưng thay vì để database scan hàng triệu <em>dòng dữ liệu đầy đủ</em>, ta tách thành 2 bước: scan nhanh trên Index để lấy ID, rồi mới lấy dữ liệu đầy đủ từ bảng thật cho đúng 20 dòng đó.</p>
+
+  <pre><span class="cm">-- ❌ Cách thông thường: scan 1M dòng đầy đủ (nặng)</span>
+<span class="fn">SELECT</span> * <span class="fn">FROM</span> users
+<span class="fn">ORDER BY</span> created_at <span class="fn">DESC</span>
+<span class="fn">LIMIT</span> <span class="nu">20</span> <span class="fn">OFFSET</span> <span class="nu">1000000</span>;
+
+<span class="cm">-- ✅ Deferred Join: scan 1M trên Index (nhẹ), chỉ đọc 20 dòng từ bảng thật</span>
+<span class="fn">SELECT</span> u.* <span class="fn">FROM</span> users u
+<span class="fn">INNER JOIN</span> (
+  <span class="fn">SELECT</span> id <span class="fn">FROM</span> users
+  <span class="fn">ORDER BY</span> created_at <span class="fn">DESC</span>
+  <span class="fn">LIMIT</span> <span class="nu">20</span> <span class="fn">OFFSET</span> <span class="nu">1000000</span>
+) <span class="fn">AS</span> q <span class="fn">ON</span> u.id = q.id;</pre>
+
+  <div class="callout callout-info">
+    <strong>Tại sao nhanh hơn?</strong> Subquery bên trong chỉ SELECT mỗi cột <code>id</code>. B-Tree Index của <code>created_at</code> chứa kèm <code>id</code>, nên toàn bộ subquery chạy <strong>100% trong Index</strong> (in-memory), không cần đọc disk. Sau đó mới dùng 20 ID đó để JOIN lấy dữ liệu đầy đủ. Thay vì vứt 1 triệu dòng đầy đủ, chỉ vứt 1 triệu cái ID bé tí.
+  </div>
+
+  <h3><span class="badge">Bổ sung</span> Giải quyết COUNT(*) chậm</h3>
+
+  <p>Bài toán kép: hiển thị tổng số trang nhưng COUNT(*) trên 2 triệu dòng cũng chậm. Ba hướng giải quyết theo thứ tự ưu tiên:</p>
+
+  <ol class="steps">
+    <li>
+      <span class="step-num">1</span>
+      <span><strong>Cache tổng số dòng:</strong> Đừng COUNT mỗi request. Lưu tổng số dòng vào Redis, cập nhật khi insert/delete. Chấp nhận con số hơi lệch vài giây (eventual consistency) — user không cần biết chính xác "1,234,567 kết quả" hay "1,234,580 kết quả".</span>
+    </li>
+    <li>
+      <span class="step-num">2</span>
+      <span><strong>Approximate count — Đếm xấp xỉ:</strong> Đây là kỹ thuật dùng số ước tính có sẵn trong đầu não của database — thay vì đếm lại từ đầu. Mỗi database đều định kỳ tự động thống kê bảng (được gọi là <em>table statistics</em>) để tối ưu query planner. Trong quá trình đó, nó ước tính toàn bộ số dòng và lưu vào catalog nội bộ. Ta lấy con số đó ra mà không cần đếm gì thêm — <strong>gần như tức thì</strong>, bất kể bảng có bao nhiêu dòng. Đổi lại, con số có thể lệch vài % so với thực tế — hoàn toàn chấp nhận được khi hiển thị “Khoảng 1.2 triệu kết quả”.</span>
+    </li>
+  </ol>
+
+  <pre><span class="cm">-- PostgreSQL: lấy approximate count từ system catalog, gần như instant</span>
+<span class="fn">SELECT</span> reltuples::bigint <span class="fn">AS</span> approx_count
+<span class="fn">FROM</span> pg_class
+<span class="fn">WHERE</span> relname = <span class="st">'users'</span>;
+
+<span class="cm">-- MySQL / MariaDB: tương tự, lấy từ information_schema</span>
+<span class="fn">SELECT</span> TABLE_ROWS <span class="fn">AS</span> approx_count
+<span class="fn">FROM</span> information_schema.TABLES
+<span class="fn">WHERE</span> TABLE_SCHEMA = <span class="st">'your_db'</span>
+  <span class="fn">AND</span> TABLE_NAME = <span class="st">'users'</span>;
+
+<span class="cm">-- MongoDB: tương tự, estimatedDocumentCount() thay vì countDocuments()</span>
+<span class="cm">-- countDocuments(): đếm chính xác, chậm trên collection lớn</span>
+<span class="cm">-- estimatedDocumentCount(): đọc metadata, gần như instant</span>
+db.users.estimatedDocumentCount()</pre>
+
+  <div class="callout callout-info">
+    <strong>Cơ chế hoạt động:</strong> PostgreSQL chạy tác vụ <strong>ANALYZE</strong> định kỳ (hoặc tự động qua autovacuum) để cập nhật table statistics. MySQL tương tự với <strong>ANALYZE TABLE</strong>. Con số <code>reltuples</code> / <code>TABLE_ROWS</code> sau đó được cập nhật — thường chỉ lệch từ vài % đến dưới 10% so với thực tế. Trên bảng có write traffic cao, nên trigger ANALYZE sau khi insert batch lớn để số liệu luôn gần đúng.
+  </div>
+
+  <ol class="steps" style="margin-top:0;">
+    <li>
+      <span class="step-num">3</span>
+      <span><strong>Giới hạn số trang hiển thị:</strong> Google chỉ hiển thị tối đa 10 trang kết quả (khoảng 100 kết quả). Thực tế, <strong>hơn 99% user không bao giờ vượt quá trang 5</strong>. Giới hạn MAX_PAGE = 100 loại bỏ hoàn toàn bài toán deep paging mà không ai phàn nàn.</span>
+    </li>
+  </ol>
+
+  <hr />
+
+  <!-- ═══════════════════ GIẢI PHÁP 3 ══ -->
+  <h2>Giải pháp 3 — Elasticsearch cho Search & Paging phức tạp</h2>
+
+  <p>Khi dữ liệu lên tới hàng chục triệu dòng và user cần <strong>full-text search</strong> (tìm theo từ khoá, fuzzy matching, relevance ranking) — SQL không còn là công cụ phù hợp nữa. Đây là lúc cần <strong>Elasticsearch</strong>.</p>
+
+  <div class="callout callout-info">
+    <strong>Elasticsearch cũng có vấn đề Deep Paging:</strong> Cơ chế <code>from + size</code> của ES (tương đương OFFSET) cũng giới hạn ở 10,000 kết quả mặc định (<code>max_result_window</code>). ES giải quyết bằng 2 API: <strong>search_after</strong> (giống Keyset Pagination) cho real-time search, và <strong>Scroll API</strong> cho batch processing.
+  </div>
+
+  <ol class="steps">
+    <li>
+      <span class="step-num">1</span>
+      <span><strong>Đồng bộ dữ liệu:</strong> Dùng <strong>CDC (Change Data Capture)</strong> — các tool như Debezium đọc binlog của MySQL/PostgreSQL và stream dữ liệu thay đổi lên Kafka → Elasticsearch theo thời gian thực. Không cần viết code đồng bộ thủ công.</span>
+    </li>
+    <li>
+      <span class="step-num">2</span>
+      <span><strong>search_after cho real-time paging:</strong> Giống Keyset Pagination, dùng <code>sort values</code> của dòng cuối cùng làm cursor cho request tiếp theo. Tốc độ ổn định dù data lên hàng tỷ document.</span>
+    </li>
+    <li>
+      <span class="step-num">3</span>
+      <span><strong>Scroll API cho export/batch:</strong> Khi cần xử lý toàn bộ dữ liệu (export CSV, reindex), dùng Scroll API — ES giữ một snapshot của kết quả search và cho phép duyệt qua từng batch mà không bị affected bởi dữ liệu đang thay đổi.</span>
+    </li>
+  </ol>
+
+  <div class="callout callout-tip">
+    <strong>✅ Nguyên tắc:</strong> Dùng <strong>SQL</strong> cho dữ liệu có cấu trúc, query đơn giản, volume vừa phải. Dùng <strong>Elasticsearch</strong> khi cần full-text search, faceted filtering (lọc theo nhiều chiều như Shopee/Tiki), hoặc volume từ chục triệu dòng trở lên.
+  </div>
+
+  <hr />
+
+  <!-- ═══════════════════ BỔ SUNG ══ -->
+  <h2>Bổ sung — Paging cho Background Jobs</h2>
+
+  <p>Một bài toán hay bị bỏ qua: khi cần xử lý <em>toàn bộ</em> 2 triệu dòng trong một background job (ví dụ: gửi email hàng loạt, migrate dữ liệu), đừng bao giờ dùng pagination thông thường.</p>
+
+  <pre><span class="cm">-- ❌ Sai: dùng OFFSET trong job, càng về sau càng chậm</span>
+<span class="fn">LOOP</span>:
+  <span class="fn">SELECT</span> * <span class="fn">FROM</span> users <span class="fn">LIMIT</span> <span class="nu">1000</span> <span class="fn">OFFSET</span> <span class="st">:current_offset</span>
+  current_offset += <span class="nu">1000</span>
+
+<span class="cm">-- ✅ Đúng: cursor-based iteration, tốc độ ổn định từ đầu đến cuối</span>
+last_id = <span class="nu">0</span>
+<span class="fn">LOOP</span>:
+  batch = <span class="fn">SELECT</span> * <span class="fn">FROM</span> users
+          <span class="fn">WHERE</span> id &gt; last_id
+          <span class="fn">ORDER BY</span> id <span class="fn">ASC</span>
+          <span class="fn">LIMIT</span> <span class="nu">1000</span>
+  <span class="fn">IF</span> batch.empty: <span class="fn">BREAK</span>
+  process(batch)
+  last_id = batch.last.id</pre>
+
+  <div class="callout callout-info">
+    <strong>Lợi ích kép:</strong> Cursor iteration không chỉ nhanh hơn mà còn <strong>resumable</strong> — lưu <code>last_id</code> vào Redis trước khi xử lý mỗi batch. Job bị crash giữa chừng? Khởi động lại từ đúng điểm đó mà không mất dữ liệu, không process trùng.
+  </div>
+
+  <hr />
+
+  <!-- ═══════════════════ SO SÁNH ══ -->
+  <h2>So sánh tổng quan các giải pháp</h2>
+
+  <table class="compare">
+    <thead>
+      <tr>
+        <th>Giải pháp</th>
+        <th>Tốc độ trang sâu</th>
+        <th>Nhảy trang tự do</th>
+        <th>Full-text search</th>
+        <th>Phù hợp với</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>OFFSET thường</strong></td>
+        <td class="no">Rất chậm</td>
+        <td class="yes">Có</td>
+        <td class="no">Không</td>
+        <td>Bảng &lt; 10k dòng</td>
+      </tr>
+      <tr>
+        <td><strong>Keyset / Cursor</strong></td>
+        <td class="yes">Rất nhanh</td>
+        <td class="no">Không</td>
+        <td class="no">Không</td>
+        <td>Infinite scroll, Feed</td>
+      </tr>
+      <tr>
+        <td><strong>Deferred Join</strong></td>
+        <td>Nhanh hơn OFFSET</td>
+        <td class="yes">Có</td>
+        <td class="no">Không</td>
+        <td>UI số trang, bắt buộc OFFSET</td>
+      </tr>
+      <tr>
+        <td><strong>Elasticsearch</strong></td>
+        <td class="yes">Rất nhanh</td>
+        <td class="yes">Có (giới hạn)</td>
+        <td class="yes">Có</td>
+        <td>Search, dữ liệu hàng chục triệu</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- ═══════════════════ TÓM TẮT ══ -->
+  <h2>Tóm tắt — Quyết định nào cho tình huống nào?</h2>
+
+  <table class="summary">
+    <thead>
+      <tr>
+        <th>Tình huống</th>
+        <th>Giải pháp</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Feed, Infinite Scroll, Load More</td>
+        <td><strong>Keyset Pagination</strong> với composite cursor</td>
+      </tr>
+      <tr>
+        <td>UI số trang, bắt buộc OFFSET</td>
+        <td><strong>Deferred Join</strong> + giới hạn MAX_PAGE + cache COUNT</td>
+      </tr>
+      <tr>
+        <td>Full-text search, lọc đa chiều</td>
+        <td><strong>Elasticsearch</strong> với search_after</td>
+      </tr>
+      <tr>
+        <td>Background job xử lý toàn bộ data</td>
+        <td><strong>Cursor iteration</strong> với resumable checkpoint</td>
+      </tr>
+      <tr>
+        <td>Export / Reindex hàng loạt</td>
+        <td><strong>Elasticsearch Scroll API</strong> hoặc cursor iteration</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p>Không có giải pháp nào là "tốt nhất" cho mọi trường hợp. Senior Engineer hiểu rõ <em>trade-off của từng lựa chọn</em> và chọn đúng công cụ cho đúng bài toán — thay vì cứ OFFSET vì đó là thứ họ học đầu tiên.</p>
+
+  <div class="tags">
+    <span class="tag">Database</span>
+    <span class="tag">Pagination</span>
+    <span class="tag">Keyset Pagination</span>
+    <span class="tag">Deferred Join</span>
+    <span class="tag">Elasticsearch</span>
+    <span class="tag">Performance</span>
+    <span class="tag">System Design</span>
+    <span class="tag">SQL</span>
+  </div>
+
+</article>
+
+</body>
+</html>
