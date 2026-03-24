@@ -1,1 +1,629 @@
-Test show
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Upload 10GB & Stream cho 1000 Users — Bài toán System Design kinh điển</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: #fff;
+      color: #1a1a1a;
+      line-height: 1.8;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: #fff;
+      border-bottom: 1px solid #e8e8e8;
+      padding: 0 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 56px;
+    }
+    .nav-logo {
+      font-family: 'Inter', sans-serif;
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      color: #1a1a1a;
+      text-decoration: none;
+    }
+    .nav-tag {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: 13px;
+      color: #6b6b6b;
+      background: #f2f2f2;
+      border-radius: 100px;
+      padding: 4px 12px;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      max-width: 740px;
+      margin: 56px auto 0;
+      padding: 0 24px;
+    }
+    .hero-tag {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: #6b6b6b;
+      margin-bottom: 20px;
+    }
+    h1 {
+      font-size: clamp(24px, 4vw, 36px);
+      font-weight: 700;
+      line-height: 1.2;
+      letter-spacing: -1px;
+      color: #1a1a1a;
+      margin-bottom: 20px;
+    }
+    .subtitle {
+      font-size: 17px;
+      color: #3d3d3d;
+      font-style: normal;
+      line-height: 1.6;
+      margin-bottom: 32px;
+    }
+
+    /* ── META ── */
+    .meta {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 16px 0;
+      border-top: 1px solid #e8e8e8;
+      border-bottom: 1px solid #e8e8e8;
+      margin-bottom: 48px;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: 13px;
+      color: #6b6b6b;
+    }
+    .avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: #1a1a1a;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-weight: 700;
+      font-size: 16px;
+      flex-shrink: 0;
+    }
+    .meta-info { display: flex; flex-direction: column; gap: 2px; }
+    .meta-author { font-weight: 600; color: #1a1a1a; }
+    .meta-dot { color: #ccc; }
+
+    /* ── ARTICLE ── */
+    article {
+      max-width: 740px;
+      margin: 0 auto;
+      padding: 0 24px 80px;
+      font-size: 16px;
+    }
+
+    /* intro pull-quote */
+    .lead {
+      font-size: 17px;
+      line-height: 1.7;
+      border-left: 3px solid #1a1a1a;
+      padding-left: 24px;
+      margin-bottom: 48px;
+      color: #2a2a2a;
+    }
+
+    /* section headers */
+    h2 {
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      margin: 56px 0 16px;
+      line-height: 1.3;
+    }
+    h3 {
+      font-size: 17px;
+      font-weight: 700;
+      margin: 36px 0 12px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    h3 .badge {
+      background: #1a1a1a;
+      color: #fff;
+      font-size: 11px;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      padding: 3px 9px;
+      border-radius: 4px;
+    }
+
+    p { margin-bottom: 24px; }
+
+    /* callout boxes */
+    .callout {
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin: 24px 0;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: 14px;
+      line-height: 1.7;
+    }
+    .callout-danger {
+      background: #fff5f5;
+      border-left: 4px solid #e53e3e;
+      color: #2d2d2d;
+    }
+    .callout-danger strong { color: #c53030; }
+    .callout-info {
+      background: #f7f7f7;
+      border-left: 4px solid #1a1a1a;
+      color: #2d2d2d;
+    }
+    .callout-tip {
+      background: #f0fff4;
+      border-left: 4px solid #38a169;
+      color: #2d2d2d;
+    }
+    .callout-tip strong { color: #276749; }
+
+    /* step list */
+    .steps {
+      list-style: none;
+      margin: 24px 0 32px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .steps li {
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: 15px;
+      line-height: 1.6;
+    }
+    .step-num {
+      flex-shrink: 0;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: #1a1a1a;
+      color: #fff;
+      font-size: 13px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 1px;
+    }
+    .steps li strong { color: #1a1a1a; }
+
+    /* flow diagram */
+    .flow {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin: 20px 0 28px;
+      background: #f7f7f7;
+      border-radius: 10px;
+      padding: 14px 18px;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: 12px;
+      font-weight: 500;
+    }
+    .flow-row {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+    .flow-box {
+      background: #1a1a1a;
+      color: #fff;
+      padding: 5px 11px;
+      border-radius: 5px;
+      white-space: nowrap;
+    }
+    .flow-arrow {
+      color: #bbb;
+      font-size: 14px;
+    }
+    .flow-box.ghost {
+      background: #e4e4e4;
+      color: #444;
+    }
+    .flow-box.highlight {
+      background: #1a1a1a;
+      outline: 2px dashed #888;
+      outline-offset: 2px;
+    }
+
+    /* code inline */
+    code {
+      background: #f2f2f2;
+      border-radius: 4px;
+      padding: 2px 7px;
+      font-family: 'Menlo', 'Consolas', monospace;
+      font-size: 15px;
+      color: #1a1a1a;
+    }
+
+    /* divider */
+    hr {
+      border: none;
+      border-top: 1px solid #e8e8e8;
+      margin: 56px 0;
+    }
+
+    /* summary table */
+    .summary {
+      width: 100%;
+      border-collapse: collapse;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: 15px;
+      margin: 32px 0;
+    }
+    .summary th {
+      text-align: left;
+      padding: 12px 16px;
+      background: #1a1a1a;
+      color: #fff;
+      font-weight: 600;
+    }
+    .summary th:first-child { border-radius: 8px 0 0 0; }
+    .summary th:last-child  { border-radius: 0 8px 0 0; }
+    .summary td {
+      padding: 12px 16px;
+      border-bottom: 1px solid #e8e8e8;
+      vertical-align: top;
+      line-height: 1.6;
+    }
+    .summary tr:last-child td { border-bottom: none; }
+    .summary tr:nth-child(even) td { background: #fafafa; }
+
+    /* tag chips */
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 48px;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    }
+    .tag {
+      background: #f2f2f2;
+      color: #444;
+      font-size: 13px;
+      padding: 6px 14px;
+      border-radius: 100px;
+    }
+
+    /* responsive */
+    @media (max-width: 600px) {
+      .flow-box { font-size: 12px; padding: 6px 10px; }
+      .flow-arrow { font-size: 14px; padding: 0 4px; }
+      h2 { font-size: 20px; }
+      article { font-size: 15px; }
+      .lead { font-size: 16px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="#">As you know</a>
+  <span class="nav-tag">System Design</span>
+</nav>
+
+<!-- HERO -->
+<header class="hero">
+  <p class="hero-tag">System Design · Backend · Streaming</p>
+  <h1>Upload 10GB & Stream cho 1000 Users — Hệ thống không sập như thế nào?</h1>
+  <p class="subtitle">Bí quyết cốt lõi không phải là làm cho Backend "chịu đựng" được file khổng lồ, mà là đừng để nó phải chạm vào.</p>
+  <div class="meta">
+    <div class="avatar">T</div>
+    <div class="meta-info">
+      <span class="meta-author">Thong Nguyen</span>
+      <span>24 tháng 3, 2026</span>
+    </div>
+  </div>
+</header>
+
+<!-- ARTICLE -->
+<article>
+
+  <p class="lead">
+    Đây là bài toán kinh điển (System Design) mà YouTube, Google Drive, Netflix đã giải quyết. Tư duy ở cấp độ Senior không phải là "nhồi nhét" cho Backend chịu được file 10GB — mà là <em>thiết kế để Backend không cần chạm vào nó</em>.
+  </p>
+
+  <!-- ═══════════════════════════════════════ PHẦN 1 ══ -->
+  <h2>Upload file 10GB làm sao để Backend không sập?</h2>
+
+  <div class="callout callout-danger">
+    <strong>❌ Sai lầm thường gặp:</strong> Client đính kèm file 10GB vào <code>multipart/form-data</code> và gửi thẳng lên Backend. 
+    <br><b>Kết quả</b>: Backend nạp toàn bộ file vào RAM → <strong>Out of Memory</strong>, hoặc request timeout giữa chừng do mạng chậm, đồng thời block toàn bộ thread xử lý khác.
+  </div>
+
+  <!-- Giải pháp 1 -->
+  <h3><span class="badge">Giải pháp 1</span> Presigned URL — Upload thẳng lên Cloud</h3>
+
+  <p>Cách tốt nhất để Backend không sập là… <strong>cho Client tự upload thẳng lên nơi lưu trữ</strong> như AWS S3 hoặc Google Cloud Storage, bỏ qua Backend hoàn toàn.</p>
+
+  <div class="flow">
+    <div class="flow-row">
+      <div class="flow-box">① Client xin phép</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-box ghost">Backend kiểm tra quyền</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-box ghost">Tạo Presigned URL</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-box">② Client nhận link</div>
+    </div>
+    <div class="flow-row">
+      <div class="flow-box highlight">③ Upload thẳng lên S3</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-box ghost">S3 gửi Webhook</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-box">④ Backend cập nhật DB</div>
+    </div>
+  </div>
+
+  <ol class="steps">
+    <li>
+      <span class="step-num">1</span>
+      <span><strong>Xin phép (Request):</strong> Client gọi API lên Backend báo "Tôi muốn upload video 10GB".</span>
+    </li>
+    <li>
+      <span class="step-num">2</span>
+      <span><strong>Cấp vé (Presigned URL):</strong> Backend kiểm tra quyền (đã đăng nhập? đủ dung lượng?). Nếu OK, dùng Secret Key gọi lên S3 tạo một <strong>Presigned URL</strong> — đường link upload tạm thời, hiệu lực 15 phút — rồi trả về cho Client.</span>
+    </li>
+    <li>
+      <span class="step-num">3</span>
+      <span><strong>Upload trực tiếp:</strong> Client dùng link đó gửi thẳng file 10GB lên S3. Backend lúc này <em>hoàn toàn rảnh rỗi</em> phục vụ người khác.</span>
+    </li>
+    <li>
+      <span class="step-num">4</span>
+      <span><strong>Thông báo (Webhook):</strong> Khi S3 nhận đủ 10GB, nó bắn Webhook (hoặc Message Queue) báo Backend: <em>"Client A đã upload xong file X"</em>. Lúc này Backend mới cập nhật Database.</span>
+    </li>
+  </ol>
+
+  <div class="callout callout-tip">
+    <strong>✅ Lợi ích:</strong> Backend không hề nhìn thấy byte nào của file 10GB. Không OOM, không timeout, không block thread — hoàn toàn scale độc lập.
+  </div>
+
+  <div class="callout callout-info">
+    <strong>🔒 Presigned URL có an toàn không?</strong> Câu hỏi thường gặp: <em>"Ai cũng có link thì upload bừa được không?"</em> — Không. Link được ký bằng <strong>HMAC</strong> với Secret Key của AWS/GCS, có TTL giới hạn (thường 15 phút), chỉ có thể upload đúng vào một path cụ thể đã chỉ định, và không thể dùng để đọc hay xoá file khác. Hết hạn hoặc sai chữ ký → S3 từ chối ngay lập tức với lỗi <code>403 Forbidden</code>.
+  </div>
+
+  <!-- Giải pháp 2 -->
+  <h3><span class="badge">Giải pháp 2</span> Chunked Upload — Băm nhỏ file</h3>
+
+  <p>Nếu không dùng Cloud mà bắt buộc lưu file ở server nội bộ (On-premise), bạn phải dùng cơ chế <strong>băm nhỏ file ở phía Frontend</strong>.</p>
+
+  <ol class="steps">
+    <li>
+      <span class="step-num">1</span>
+      <span><strong>Slicing:</strong> Dùng JavaScript <code>File.slice()</code> cắt file 10GB thành hàng nghìn mảnh nhỏ (chunk), mỗi mảnh ~5MB.</span>
+    </li>
+    <li>
+      <span class="step-num">2</span>
+      <span><strong>Gửi tuần tự / song song:</strong> Client gửi từng chunk 5MB lên Backend. Backend nhận mảnh nào, dùng <strong>Stream</strong> ghi nối tiếp (append) ngay xuống ổ cứng. RAM chỉ tốn tối đa 5MB mỗi request — không bao giờ sập.</span>
+    </li>
+    <li>
+      <span class="step-num">3</span>
+      <span><strong>Resumable:</strong> Mạng đứt tại chunk thứ 500? Client chỉ cần gửi tiếp từ chunk 501. Cực kỳ an toàn, không mất dữ liệu.</span>
+    </li>
+  </ol>
+
+  <div class="callout callout-info">
+    <strong>Tip:</strong> Các hệ thống lớn thường dùng giao thức mã nguồn mở <strong>TUS</strong> (<a href="https://tus.io" target="_blank" rel="noopener" style="color:#1a1a1a;">tus.io</a>) để chuẩn hoá Chunked Upload với đầy đủ tính năng resumable, checksum và metadata.
+  </div>
+
+  <h3><span class="badge">Bổ sung</span> Validate file sau khi upload — Đừng bỏ qua!</h3>
+
+  <p>Vì Backend không trực tiếp "chạm" vào file, câu hỏi đặt ra là: <strong>ai sẽ kiểm tra virus, malware hay nội dung độc hại?</strong> Đây là bước cực kỳ quan trọng mà nhiều hệ thống bỏ sót.</p>
+
+  <div class="callout callout-danger">
+    <strong>⚠️ Rủi ro bị bỏ qua:</strong> Nếu không validate, user có thể upload file <code>.exe</code>, script độc hại, hoặc nội dung vi phạm. Chỉ cần một file lọt qua là đủ gây hậu quả nghiêm trọng cho toàn hệ thống và người dùng khác.
+  </div>
+
+  <ol class="steps">
+    <li>
+      <span class="step-num">1</span>
+      <span><strong>Trạng thái PENDING:</strong> Ngay khi file upload xong, ghi vào DB với trạng thái <code>PENDING</code> — chưa cho phép truy cập công khai.</span>
+    </li>
+    <li>
+      <span class="step-num">2</span>
+      <span><strong>Trigger scan job:</strong> S3 Event Notification kích hoạt một <strong>Lambda / Worker</strong> chạy virus scan (ClamAV, AWS GuardDuty Malware Protection).</span>
+    </li>
+    <li>
+      <span class="step-num">3</span>
+      <span><strong>Cập nhật trạng thái:</strong> Scan sạch → DB chuyển thành <code>READY</code>, cho phép truy cập. Phát hiện mối đe doạ → chuyển sang <code>QUARANTINED</code>, xoá file và cảnh báo admin.</span>
+    </li>
+  </ol>
+
+  <h3><span class="badge">Bonus</span> Upload xong → Video đi đâu? Luồng hoàn chỉnh</h3>
+
+  <p>Sau khi S3 nhận xong file và Webhook bắn về BE, hệ thống cần thêm một bước nữa trước khi video sẵn sàng để xem — đây là cầu nối giữa hai vế của bài toán.</p>
+
+  <div class="flow">
+    <div class="flow-row">
+      <div class="flow-box ghost">S3 nhận xong file</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-box ghost">Webhook → BE</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-box">Đẩy job vào Message Queue</div>
+    </div>
+    <div class="flow-row">
+      <div class="flow-box ghost">Worker pick up job</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-box highlight">FFmpeg Transcoding</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-box ghost">Lưu .ts segments lên S3</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-box">DB: READY ✓</div>
+    </div>
+  </div>
+
+  <div class="callout callout-info">
+    <strong>Tại sao cần Message Queue (SQS / RabbitMQ / Kafka)?</strong> Thay vì BE tự chạy FFmpeg và bị treo, nó chỉ đẩy một message nhỏ vào Queue rồi trả về ngay. Worker pool (scale độc lập) lần lượt xử lý các job transcoding — hệ thống không bao giờ bị nghẽn dù có hàng nghìn video upload cùng lúc.
+  </div>
+
+  <!-- ═══════════════════════════════════════ PHẦN 2 ══ -->
+  <hr />
+
+  <h2>1000 Users cùng xem video 10GB làm sao không sập?</h2>
+
+  <div class="callout callout-danger">
+    <strong>❌ Sai lầm thường gặp:</strong> Lưu file <code>video.mp4</code> 10GB trong ổ cứng server, rồi trả nguyên đường link cho user. 1000 user tải cùng lúc = <strong>10 Terabytes băng thông</strong>. Card mạng server bị cháy, video cứ xoay vòng (buffering) mãi không chạy.
+  </div>
+
+  <!-- Giải pháp 1 -->
+  <h3><span class="badge">Giải pháp 1</span> Video Transcoding & HLS / DASH</h3>
+
+  <p>Bạn <strong>không bao giờ</strong> được phục vụ file gốc 10GB cho người xem. Ngay sau khi upload xong, file phải được ném vào một <strong>Background Job</strong> (dùng FFmpeg chẳng hạn) để xử lý.</p>
+
+  <ol class="steps">
+    <li>
+      <span class="step-num">1</span>
+      <span><strong>Transcoding:</strong> Nén và render video gốc thành nhiều độ phân giải: <code>1080p</code>, <code>720p</code>, <code>480p</code>, <code>360p</code>.</span>
+    </li>
+    <li>
+      <span class="step-num">2</span>
+      <span><strong>Segmentation:</strong> Cắt mỗi version thành các đoạn cực nhỏ, dài 2–6 giây (<code>.ts</code> hoặc <code>.m4s</code>).</span>
+    </li>
+    <li>
+      <span class="step-num">3</span>
+      <span><strong>Manifest file:</strong> Tạo file <code>.m3u8</code> liệt kê thứ tự các đoạn video nhỏ kia.</span>
+    </li>
+  </ol>
+
+  <div class="callout callout-info">
+    <strong>Adaptive Bitrate Streaming:</strong> Player của user tải file <code>.m3u8</code> trước, rồi cứ kéo từng đoạn 2 giây về phát. Mạng khoẻ → tải đoạn <code>1080p</code>. Mạng yếu → tự hạ xuống <code>480p</code>. Server không cần "ném" cục 10GB đi nữa — mỗi request chỉ là vài MB.
+  </div>
+
+  <div class="callout callout-info">
+    <strong>📡 User biết khi nào video sẵn sàng?</strong> Transcoding một video 10GB có thể mất vài phút. Có hai cách thông báo phổ biến: <strong>Polling</strong> — client tự gọi API kiểm tra trạng thái mỗi 5 giây (đơn giản, dễ làm, nhưng tốn request); hoặc <strong>WebSocket / Server-Sent Events (SSE)</strong> — server chủ động đẩy thông báo <em>"Video của bạn đã sẵn sàng!"</em> ngay khi transcoding xong (real-time, trải nghiệm mượt hơn). YouTube sử dụng cách thứ hai.
+  </div>
+
+  <!-- Giải pháp 2 -->
+  <h3><span class="badge">Giải pháp 2</span> CDN — Sát thủ chịu tải</h3>
+
+  <p>Dù đã băm nhỏ video thành HLS, 1000 user cùng request về <em>một</em> Origin Server thì server vẫn quá tải I/O ổ cứng. Đây là lúc <strong>CDN</strong> xuất hiện.</p>
+
+  <div class="flow">
+    <div class="flow-row">
+      <div class="flow-box ghost">User 1 request</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-box">CDN Edge (Hà Nội)</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-box ghost">Cache MISS → lấy từ Origin</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-box ghost">Lưu cache tại Edge</div>
+    </div>
+    <div class="flow-row">
+      <div class="flow-box ghost">999 Users còn lại</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-box highlight">CDN Edge cache HIT</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-box ghost">Origin không bị đụng đến</div>
+    </div>
+  </div>
+
+  <p style="margin-top:24px;">Khi User 1 xem video, CDN chưa có cache → lấy từ Origin (Cache Miss) và lưu các đoạn <code>.ts</code> tại Edge server gần nhất (Hà Nội, HCM…). Với 999 user còn lại, CDN trả thẳng từ Edge — <strong>nhanh, rẻ, Origin không bị đụng đến</strong>. Backend thực chất chỉ phục vụ đúng một người đầu tiên.</p>
+
+  <div class="callout callout-tip">
+    <strong>✅ Kết quả:</strong> Dù có 1 triệu user cùng xem, Origin Server của bạn cũng không hay biết. CDN như Cloudflare, AWS CloudFront hay Akamai sẽ gánh toàn bộ băng thông.
+  </div>
+
+  <h3><span class="badge">Bổ sung</span> Cache Invalidation — Xoá cache khi cần thiết</h3>
+
+  <p>CDN cache rất mạnh, nhưng cũng tạo ra một bài toán mới: <strong>nếu video bị xoá hoặc cần gỡ xuống khẩn cấp thì sao?</strong> CDN Edge vẫn đang giữ bản sao và tiếp tục phát cho user.</p>
+
+  <div class="callout callout-danger">
+    <strong>⚠️ Tình huống thực tế:</strong> Video vi phạm bản quyền được report. BE xoá khỏi S3 và DB ngay lập tức, nhưng CDN Edge tại hàng chục thành phố trên thế giới vẫn đang cache và phát video đó cho user trong nhiều giờ tiếp theo — gây rủi ro pháp lý nghiêm trọng.
+  </div>
+
+  <div class="callout callout-info">
+    <strong>Giải pháp — CDN Invalidation API:</strong> <strong>CloudFront</strong> có <code>CreateInvalidation</code> API, <strong>Cloudflare</strong> có Purge Cache API — gọi vào là cache bị xoá khỏi tất cả Edge nodes trong vòng 1–2 phút. Lưu ý một số CDN tính phí cho mỗi lần invalidate, vì vậy nên thiết kế URL có version trong path (ví dụ <code>/v2/segment-001.ts</code>) để chủ động kiểm soát cache thay vì phải invalidate thủ công.
+  </div>
+
+  <h3><span class="badge">Bổ sung</span> Video Private — Signed URL & Signed Cookie</h3>
+
+  <p>Không phải video nào cũng public. Google Drive, Dropbox, các hệ thống nội bộ đều có phân quyền xem. Lúc này CDN không thể cache công khai — cần cơ chế xác thực ngay tại tầng CDN.</p>
+
+  <ol class="steps">
+    <li>
+      <span class="step-num">1</span>
+      <span><strong>Signed URL từ CDN:</strong> Thay vì trả link CDN thẳng, BE tạo một <strong>CloudFront Signed URL</strong> hoặc <strong>Cloudflare Signed Token</strong> — link có chữ ký HMAC, TTL ngắn (ví dụ 1 giờ), có thể gắn với IP của user để chống share link.</span>
+    </li>
+    <li>
+      <span class="step-num">2</span>
+      <span><strong>Signed Cookie (cho HLS):</strong> HLS gửi hàng trăm request để lấy từng segment <code>.ts</code> — dùng Signed URL riêng cho từng file là bất khả thi. Giải pháp là <strong>Signed Cookie</strong> — đặt cookie 1 lần, áp dụng cho toàn bộ domain CDN trong suốt session đó.</span>
+    </li>
+    <li>
+      <span class="step-num">3</span>
+      <span><strong>CDN tự xác thực ở Edge:</strong> Mỗi request đến Edge, CDN kiểm tra chữ ký mà không cần gọi về Origin. Hết hạn hoặc sai chữ ký → trả về <code>403 Forbidden</code> ngay tại Edge, cực kỳ nhanh và không tốn tài nguyên Origin.</span>
+    </li>
+  </ol>
+
+  <!-- ═══════════════════════════════════════ SUMMARY ══ -->
+  <hr />
+
+  <h2>Tóm tắt</h2>
+
+  <table class="summary">
+    <thead>
+      <tr>
+        <th>Bài toán</th>
+        <th>Sai lầm kinh điển</th>
+        <th>Giải pháp chuẩn</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Upload 10GB</strong></td>
+        <td>Gửi thẳng qua Backend → OOM, timeout</td>
+        <td><strong>Presigned URL</strong> (upload thẳng lên S3) hoặc <strong>Chunked / Resumable Upload</strong></td>
+      </tr>
+      <tr>
+        <td><strong>1000 users xem video</strong></td>
+        <td>Trả nguyên file .mp4 → băng thông cháy</td>
+        <td><strong>HLS Transcoding</strong> (FFmpeg → .m3u8) + <strong>CDN</strong> (Cloudflare, CloudFront)</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p>Đây là kiến trúc đang được vận hành tại YouTube, Google Drive, Netflix và hầu hết các nền tảng video lớn hiện nay. Senior Engineer không giải quyết bài toán bằng cách "nâng cấp phần cứng" — họ thiết kế hệ thống để <em>né tránh tắc nghẽn ngay từ đầu</em>.</p>
+
+  <div class="tags">
+    <span class="tag">System Design</span>
+    <span class="tag">Upload</span>
+    <span class="tag">Video Streaming</span>
+    <span class="tag">HLS</span>
+    <span class="tag">CDN</span>
+    <span class="tag">Presigned URL</span>
+    <span class="tag">Chunked Upload</span>
+    <span class="tag">AWS S3</span>
+  </div>
+
+</article>
+
+</body>
+</html>
