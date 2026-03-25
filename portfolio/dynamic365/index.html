@@ -208,16 +208,40 @@
       margin-bottom: 16px;
     }
 
-    .job-list li {
+    .job-list > li {
       display: flex; align-items: flex-start; gap: 10px;
       font-size: 14px; color: var(--sub); line-height: 1.65;
     }
 
-    .job-list li::before {
+    .job-list > li::before {
       content: ''; display: block;
       width: 4px; height: 4px; min-width: 4px;
       border-radius: 50%;
       background: var(--muted); margin-top: 9px;
+    }
+
+    .job-list > li.group-label::before { display: none; }
+    .job-list > li.group-label { font-weight: 600; color: var(--ink); margin-top: 6px; padding-left: 14px; border-left: 2px solid var(--bdr2); }
+
+    .job-sublist {
+      list-style: none;
+      display: flex; flex-direction: column; gap: 6px;
+      margin-top: 6px; padding-left: 14px;
+    }
+
+    .job-sublist li {
+      position: relative;
+      padding-left: 12px;
+      font-size: 13.5px; color: var(--sub); line-height: 1.6;
+    }
+
+    .job-sublist li::before {
+      content: ''; display: block;
+      position: absolute;
+      left: 0; top: 8px;
+      width: 3px; height: 3px;
+      border-radius: 50%;
+      background: var(--bdr2);
     }
 
     .edu-row {
@@ -334,9 +358,10 @@
       <section id="summary">
         <p class="sec-lbl">Summary</p>
         <p style="font-size:14px;color:var(--sub);line-height:1.9;max-width:580px;">
-          Backend Engineer with 6 years of experience building backend systems, capable of handling tasks from design to implementation.
-          Experienced in working with data processing workflows, addressing real-world performance issues, and developing APIs that ensure stability and data consistency.
-          Able to work independently and solve technical problems throughout the system development lifecycle.
+          Backend Engineer with 6 years of experience in building backend systems. 
+          Specialized in Microsoft Dynamics 365 (D365) and Power Platform. 
+          Experienced in developing C# Plugins, Custom Actions, and Web Resources (Vue.js). 
+          Capable of handling tasks from design to implementation, solving technical problems, and ensuring system stability.
         </p>
       </section>
 
@@ -420,67 +445,28 @@
           </div>
           <div class="job-co">VUS &mdash; Vietnam USA Society English Centers &nbsp;&middot;&nbsp; Ho Chi Minh City</div>
           <ul class="job-list">
-            <li>
-  Built a tele-sale app on Power Apps (Dataverse, Vue.js on Web Resource).
-  Integrated a WebRTC library for in-app calling.
-  Built search and filter features using Dataverse API.
-</li>
-
-<li>
-  Built a lead distribution feature using Custom Action and C# Plugin.
-  Assigned leads from different channels to the ERP system.
-  Configured rules on the view form
-</li>
-
-<li>
-  Used Dataverse Custom API inside plugin pipeline to expose backend logic.
-  No separate server was needed.
-  Added retry logic to improve reliability.
-</li>
-
-<li>
-  Used Power Automate as an API gateway.
-  Stored credentials inside flows.
-  Called external APIs and returned tokens.
-</li>
-
-<li>
-  Used Power Automate to run scripts on a schedule.
-  Worked with Excel and SharePoint files.
-  Sent notifications by email and messages.
-</li>
-
-<li>
-  Built a KPI report web app with charts and tables (Dataverse, Vue.js on Web Resource).
-  Used live data from Dataverse.
-  Replaced an old Power BI report.
-</li>
-
-<li>
-  Built a "Customer Snapshot" app (Dataverse, Vue.js on Web Resource).
-  Combined customer data from multiple forms view into a single page.
-</li>
-
-<li>
-  Used tools like XrmToolBox and "Level up for Dynamics 365 PowerApp" for debugging and API testing and others action. 
-</li>
-
-<li>
-  Built internal apps using Oracle APEX.
-  Created an event app and a staff forum.
-  Added reactions, feedback, and admin dashboard.
-  Implemented role-based access.
-</li>
-
-<li>
-  Built a service to sync data between CRM and social platforms.
-  Used Node.js and MongoDB.
-  Deployed on Heroku with GitHub Actions.
-  Helped track campaign performance.
-</li>
+            <li class="group-label">D365 &amp; Backend Development</li>
+            <ul class="job-sublist">
+              <li>Built <strong>C# Plugins</strong> and <strong>Custom Actions</strong> to handle lead distribution to the ERP system.</li>
+              <li>Developed <strong>Dataverse Custom APIs</strong> to run backend logic without using a separate server.</li>
+              <li>Applied retry and idempotency to plugins to make the system more stable.</li>
+              <li>Used <strong>XrmToolBox</strong> and "Level Up for Dynamics 365" / "Dataverse REST Builder" for debugging and API testing.</li>
+            </ul>
+            <li class="group-label">Web Resources (Vue.js)</li>
+            <ul class="job-sublist">
+              <li>Created a tele-sale CRM app using <strong>Vue.js on Web Resource</strong> — integrated <strong>WebRTC</strong> for in-app calling via a custom event adapter; built global search with Dataverse OData API and page-cookie infinite scroll.</li>
+              <li>Built a "Customer Snapshot" page to combine data from multiple sources into one Dataverse view.</li>
+              <li>Developed a KPI and performance report app with charts using live Dataverse data, replacing old Power BI reports.</li>
+            </ul>
+            <li class="group-label">Automation &amp; Integration</li>
+            <ul class="job-sublist">
+              <li>Used <strong>Power Automate</strong> as an API gateway to connect with external systems and manage tokens; also scheduled Custom Action calls and handled Excel/SharePoint operations and notifications.</li>
+              <li>Built a service using <strong>Node.js and MongoDB</strong> to sync statuses between CRM and social platforms for campaign CR tracking; extended with bulk email/SMS and segmentation tools.</li>
+              <li>Used <strong>Oracle APEX</strong> to build internal apps: a staff forum and an event management app with role-based access; used APEX REST APIs for cross-system integration.</li>
+            </ul>
           </ul>
           <div class="tags">
-            <span class="tag hi">Custom Action Plugin</span>
+            <span class="tag hi">D365 Custom Action Plugin</span>
             <span class="tag hi">Dataverse Custom API</span>
             <span class="tag hi">Web Resource</span>
             <span class="tag hi">Power Automate</span>
