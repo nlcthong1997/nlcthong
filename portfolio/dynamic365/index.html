@@ -258,9 +258,8 @@
     .edu-sub { font-size: 14px; color: var(--muted); }
 
     .edu-badge {
-      font-size: 11px; font-weight: 500; color: var(--sub);
-      border: 1px solid var(--bdr); padding: 2px 10px;
-      border-radius: 3px; white-space: nowrap;
+      font-size: 11px; font-weight: 500; color: var(--muted);
+      white-space: nowrap;
     }
 
     footer {
@@ -299,6 +298,23 @@
         border: 1.5px solid #666;
         width: 5px; height: 5px;
         margin-top: 8px;
+      }
+
+      /* Tags: print as plain comma-separated text */
+      .tags { display: inline; }
+      .tag, .tag.hi {
+        display: inline;
+        background: none; border: none; padding: 0;
+        font-size: 10.5pt; color: #333; font-weight: normal;
+        border-radius: 0;
+      }
+      .tag::after { content: ' | '; color: #aaa; }
+      .tag:last-child::after { content: ''; }
+
+      /* Edu badge: remove box when printing */
+      .edu-badge {
+        border: none; padding: 0;
+        font-size: 10.5pt; color: #555;
       }
     }
   </style>
@@ -359,8 +375,8 @@
         <p class="sec-lbl">Summary</p>
         <p style="font-size:14px;color:var(--sub);line-height:1.9;max-width:580px;">
           Backend Engineer with 6 years of experience in building backend systems. 
-          Specialized in Microsoft Dynamics 365 (D365) and Power Platform. 
-          Experienced in developing C# Plugins, Custom Actions, and Web Resources (Vue.js). 
+          Specialized in <strong>Microsoft Dynamics 365 (D365) and Power Platform</strong>. 
+          Experienced in developing <strong>C# Plugins, Custom Actions, and Web Resources (Vue.js)</strong>. 
           Capable of handling tasks from design to implementation, solving technical problems, and ensuring system stability.
         </p>
       </section>
