@@ -193,7 +193,7 @@
 
     .job-list > li::before {
       content: ''; display: block;
-      width: 4px; height: 4px; min-width: 4px;
+      width: 5px; height: 5px; min-width: 5px;
       border-radius: 50%;
       background: var(--muted); margin-top: 9px;
     }
@@ -217,7 +217,7 @@
       content: ''; display: block;
       position: absolute;
       left: 0; top: 8px;
-      width: 3px; height: 3px;
+      width: 4px; height: 4px;
       border-radius: 50%;
       background: var(--bdr2);
     }
@@ -267,6 +267,12 @@
       section { margin-bottom: 24px; }
       .job    { margin-bottom: 20px; break-inside: avoid; }
       .edu-row { break-inside: avoid; }
+
+      .job-list > li::before,
+      .job-sublist li::before {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
     }
   </style>
 </head>
