@@ -1,0 +1,84 @@
+Thong Nguyen Lam Chi
+Software Engineer
+
+Ho Chi Minh City
++84393438271
+nlcthong1997@gmail.com
+
+Summary
+I am a Software Engineer with over 6 years of experience designing, developing, and optimizing high-performance, scalable enterprise applications. I have experience in building business management and educational systems using Microsoft and Oracle ecosystems. Adept at architecting Modular Monolith systems, I specialize in encapsulating domain logic into isolated plugins and orchestrating communication via event triggers and hubs for asynchronous integration. This is demonstrated through my contributions to large-scale enterprise digital transformation projects, ensuring seamless operations with minimal errors and high scalability. 
+
+Technical Skills
+Backend: .NET (C#), NodeJS, PHP
+Frontend: VueJS, JQuery, HTML5, Tailwind CSS, Bootstrap, CSS
+Database: Dataverse, Oracle, PL/SQL, MySQL
+Cloud & DevOps: Azure (Function, App Insights, App Service, Redis), Docker, Git
+Platform: Power App, Power Automate, Oracle Apex
+
+2024 - Now
+1.Educational CRM & Enrollment Management System
+Domain: Education
+Tech Stack: .NET (C#), Power Apps, Power Automate, Dataverse, Azure Function, App Insights, App Service, VueJS, RESTful APIs (Integration Custom API)
+Description: An enterprise CRM system designed to optimize school operations and sales performance. Key features include student and classroom management, automated enrollment workflows, revenue distribution, and sales KPI tracking via interactive dashboards. 
+Key Responsibilities & Achievements:
+Architecture & API Design: Modularized core domain logic (Enrollment, KPI tracking) into isolated C# plugin DLLs to ensure clean maintainability; developed custom RESTful APIs within the Dataverse plugin layer for external system integrations.
+Data Reconciliation & Go-Live QA: Built a nightly data reconciliation flow driven by Azure Function Timer Triggers; automated vendor data ingestion, cross-checked datasets against Dataverse/CRM records, and generated daily Excel reports to systematically track data drift.
+Resiliency, Alerting & Support Tooling: Engineered an end-to-end operational monitoring strategy featuring customized error logging, automatic retry mechanisms, and data resync utilities for IT Support; configured automated alerts to instantly detect API failures and system bottlenecks.
+Event-Driven Streaming: Integrated localized event stages with Azure Event Hubs to stream real-time data triggers asynchronously, enabling high-throughput vendor data consumption.
+Custom Frontend Extensions: Developed highly tailored user interfaces using Power Apps Web Resources and VueJS, successfully accommodating complex business workflows and delivering enhanced, detailed data views for end-users.
+System Monitoring & Security: Configured custom header tracking on Azure Functions and utilized Azure App Service Availability to conduct continuous health checks, ensuring high availability and seamless traffic auditing for all custom integrations.
+
+Custom Frontend Extensions: Developed highly tailored user interfaces using Power Apps Web Resources and VueJS, successfully accommodating complex business requirements and delivering enhanced, detailed views for end-users.
+System Monitoring & Security: Configured custom header logging on Azure Functions and utilized Azure App Service Availability to conduct continuous health checks, ensuring high availability and seamless traffic auditing for both Power Apps and custom APIs.
+
+
+9/2023 - Now
+2.Enterprise Learning Management System (LMS)
+Domain: EdTech / Education Management 
+Tech Stack: Oracle APEX (Low-Code UI), Oracle PL/SQL (High-Code Core), RESTful APIs, Media Streaming APIs, Azure Blob Storage
+Description: An academic-focused Learning Management System designed to fully digitize the classroom ecosystem and student learning experience. The platform serves as a centralized hub that orchestrates course curricula, daily lesson tracking, and homework management, while facilitating interactive teacher-student feedback loops and automated attendance workflows. 
+Key Responsibilities & Achievements:
+
+Query & Page Load Optimization: Optimized heavy database operations by tuning complex Oracle PL/SQL transactional queries and refining page-load logic; successfully reduced data rendering latency and minimized web tier overhead within the Oracle APEX environment.
+Core Academic Engine: Developed core modules for comprehensive academic tracking, including course curricula, daily lesson logs, homework assignments, and interactive teacher-student feedback loops.
+Media Storage & Async Synchronization: Engineered a scalable media handling workflow for parent monitoring features; built a mechanism to stream photos/videos from the client to the database, and developed background sync jobs to offload media files to Azure Blob Storage.
+Data Integration & Scheduling: Architected the student-teacher-classroom allocation engine by orchestrating real-time data ingestion from disparate Core Education and teacher management systems via RESTful APIs.
+
+tháng 5/2025 - thang 8/2025
+3.Telesales Smart Module (CRM Extension) 
+Domain: Telecommunications / CRM & Sales Automation 
+Tech Stack: VueJS, Dataverse/CRM Web Resources, Xrm Queries, OpenAI API, RESTful APIs 
+Description: A specialized, academic-focused telesales module built within the CRM ecosystem to streamline agent workflows. The platform serves as a centralized hub that orchestrates real-time, web-based calling and automated script tracking, while facilitating interactive customer feedback loops and automated post-call batch logging.
+Key Achievements & Responsibilities:
+●	Multi-Tab State Synchronization: Designed a real-time cross-tab communication architecture utilizing BroadcastChannel and Storage Events, resolving browser session conflicts and ensuring synchronized call states across multiple tabs.
+●	Vendor Telephony Integration: Embedded third-party calling widgets directly into CRM layouts, binding active telephony actions (init, hangup) to custom workflows to automate post-call event logging and KPI tracking.
+●	AI Analytics & CRM Ingestion: Integrated OpenAI API alongside localized configuration matrices to auto-generate behavioral summaries; streamlined data pipelines to handle automated batch log ingestion back to the CRM via Xrm Queries.
+
+3/2023 - 9/2023
+4. Employee Insight & Engagement Platform 
+Domain: HRTech / Corporate Governance & C&B 
+Tech Stack: Oracle APEX, Oracle PL/SQL, AJAX Callbacks, SSO, Workspace Session Sharing 
+Description: A centralized employee engagement platform designed to digitize internal corporate activities, managing company-wide dynamic feedback forms, peer-to-peer appreciation systems (V-Cheer), and a multi-level approval CMS for HR. 
+Key Achievements & Responsibilities:
+●	Architecture & Auth: Acted as sole developer to design the relational schema and architect the Oracle APEX platform, implementing multi-app session sharing and seamless SSO integration.
+●	Asynchronous Web Engineering: Utilized PL/SQL and AJAX Callbacks to build responsive dynamic forms, minimizing frontend-to-database latency.
+●	RBAC & Process Automation: Built a granular RBAC framework and automated multi-level approval workflows with integrated file upload and email notifications.
+
+3/2021 - 3/2023
+Distributed Logistics & Fleet Management System
+JVIT Company, Ho Chi Minh, Viet Nam Tech Stack: PHP Laravel, VueJS, RabbitMQ, MySQL, Docker, WebSockets, RESTful APIs
+Description: A logistics platform designed with decoupled service hubs (Central Core, Warehouse WMS, and Fleet TMS) to handle high-concurrency vehicle routing, asynchronous inventory updates, and secure cross-center data access.
+Key Achievements & Responsibilities:
+●	Distributed Hub Architecture: Partitioned a legacy monolith into isolated operational centers (Core, WMS, TMS), optimizing multi-tenant database boundaries.
+●	Asynchronous Message Integration: Integrated RabbitMQ with Dead Letter Queues (DLQ) to handle high-volume inventory sync and vehicle state events asynchronously.
+●	Security & Real-Time Streaming: Enforced CORS Whitelisting and XSS Sanitization across hubs; built live dashboards using WebSockets to optimize report query performance.
+
+05/2019 — 09/2020
+Fresher Web Developer HDWebsoft
+Core Web Engineering: Developed responsive admin modules and dynamic application features utilizing PHP (Laravel) and jQuery/AJAX. 
+
+Education & Certification 
+2019 — 2021 
+Bachelor of Software Engineering University of Science · HCMUS  — Bridging Program
+2015 — 2018 
+ Associate Degree in Software Engineering University of Science · HCMUS  — College of Technology 

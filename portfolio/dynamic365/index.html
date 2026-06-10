@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Nguyen Lam Chi Thong &mdash; Senior Backend Engineer</title>
+  <title>Nguyen Lam Chi Thong &mdash; Full Stack / Power Platform Developer</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
@@ -86,31 +86,25 @@
       margin-left: 72px;
     }
 
-    /* === TIMELINE MARKS (injected by JS) === */
-    /*
-      Each mark spans the full 72px margin strip.
-      Flex layout: [yr label] [dot] — right-aligned so dot sits on the border.
-    */
     .tl-mark {
       position: absolute;
-      left: -72px;          /* start at the left edge of the margin strip */
-      width: 72px;          /* full margin width */
+      left: -72px;
+      width: 72px;
       transform: translateY(-50%);
       display: flex;
       align-items: center;
-      justify-content: flex-end;  /* push dot to the border */
+      justify-content: flex-end;
       gap: 8px;
       pointer-events: none;
     }
 
-    /* Circle centered ON the border line */
     .tl-mark .dot {
       width: 7px; height: 7px;
       border-radius: 50%;
       border: 1.5px solid var(--bdr2);
       background: var(--bg);
       flex-shrink: 0;
-      margin-right: -4px;   /* half dot width so it straddles the line */
+      margin-right: -4px;
       transition: background 0.25s, border-color 0.25s, box-shadow 0.25s, width 0.2s, height 0.2s;
     }
 
@@ -122,7 +116,6 @@
       margin-right: -5px;
     }
 
-    /* Year label to the left of the dot */
     .tl-mark .yr {
       font-size: 11px;
       font-weight: 500;
@@ -140,7 +133,6 @@
     /* === SECTIONS === */
     section { margin-bottom: 44px; }
 
-    /* Level 2 — Section heading (Summary, Skills, Experience…) */
     .sec-lbl {
       font-size: 18px; font-weight: 700;
       letter-spacing: -0.3px;
@@ -171,20 +163,8 @@
       color: var(--muted); padding-top: 3px;
     }
 
-    .tags { display: flex; flex-wrap: wrap; gap: 5px; }
-
-    .tag {
-      display: inline-block;
-      padding: 2px 9px;
-      border: 1px solid var(--bdr);
-      border-radius: 3px;
-      font-size: 11.5px; color: var(--sub);
-      background: var(--surf);
-    }
-
-    .tag.hi {
-      border-color: #c0c0c0; color: #1a1a1a;
-      background: #f0f0f0; font-weight: 500;
+    .skill-val {
+      font-size: 13.5px; color: var(--sub);
     }
 
     .job { margin-bottom: 48px; }
@@ -196,10 +176,8 @@
       gap: 8px; margin-bottom: 3px;
     }
 
-    /* Level 3 — Item title (job title, edu name) */
     .job-title { font-size: 15px; font-weight: 600; color: var(--ink); }
     .job-period { font-size: 12px; color: var(--muted); }
-    /* Level 4 — Metadata (company, school subtitle) */
     .job-co { font-size: 14px; color: var(--muted); margin-bottom: 12px; }
 
     .job-list {
@@ -252,9 +230,7 @@
     }
     .edu-row:first-child { border-top: 1px solid var(--bdr); }
 
-    /* Level 3 — Item title (edu) */
     .edu-name { font-size: 15px; font-weight: 600; color: var(--ink); margin-bottom: 3px; }
-    /* Level 4 — Metadata */
     .edu-sub { font-size: 14px; color: var(--muted); }
 
     .edu-badge {
@@ -291,31 +267,6 @@
       section { margin-bottom: 24px; }
       .job    { margin-bottom: 20px; break-inside: avoid; }
       .edu-row { break-inside: avoid; }
-
-      /* Use border instead of background for bullets so they print without needing "Background graphics" */
-      .job-list li::before {
-        background: transparent;
-        border: 1.5px solid #666;
-        width: 5px; height: 5px;
-        margin-top: 8px;
-      }
-
-      /* Tags: print as plain comma-separated text */
-      .tags { display: inline; }
-      .tag, .tag.hi {
-        display: inline;
-        background: none; border: none; padding: 0;
-        font-size: 10.5pt; color: #333; font-weight: normal;
-        border-radius: 0;
-      }
-      .tag::after { content: ' | '; color: #aaa; }
-      .tag:last-child::after { content: ''; }
-
-      /* Edu badge: remove box when printing */
-      .edu-badge {
-        border: none; padding: 0;
-        font-size: 10.5pt; color: #555;
-      }
     }
   </style>
 </head>
@@ -332,20 +283,13 @@
   </nav>
 
   <div id="page">
-
-    <!--
-      #content: left border = the notebook margin line.
-      Year dots (.tl-mark) are injected by JS, positioned absolute
-      on that line exactly at the height of each section heading.
-      Year labels float to the left of the line in the 64px margin-left gap.
-    -->
     <div id="content">
 
       <!-- HERO -->
       <header id="hero" style="margin-bottom:44px;">
-        <p style="font-size:11px;font-weight:500;letter-spacing:3.5px;text-transform:uppercase;color:var(--muted);margin-bottom:18px;">Backend Engineer</p>
+        <p style="font-size:11px;font-weight:500;letter-spacing:3.5px;text-transform:uppercase;color:var(--muted);margin-bottom:18px;">Full Stack / Power Platform Developer</p>
         <h1 style="font-size:48px;font-weight:700;letter-spacing:-2.5px;line-height:0.95;color:var(--ink);margin-bottom:20px;">Nguyen Lam Chi Thong</h1>
-        <p style="font-size:14px;color:var(--sub);margin-bottom:36px;">Ho Chi Minh City, Vietnam &nbsp;&bull;&nbsp; 6 years experience</p>
+        <p style="font-size:14px;color:var(--sub);margin-bottom:36px;">Ho Chi Minh City, Vietnam &nbsp;&bull;&nbsp; 6+ years experience</p>
         <div style="display:flex;flex-direction:column;gap:10px;">
           <a href="tel:+84393438271" class="clink">
             <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
@@ -374,10 +318,13 @@
       <section id="summary">
         <p class="sec-lbl">Summary</p>
         <p style="font-size:14px;color:var(--sub);line-height:1.9;max-width:580px;">
-          Backend Engineer with 6 years of experience in building backend systems. 
-          Specialized in <strong>Microsoft Dynamics 365 (D365) and Power Platform</strong>. 
-          Experienced in developing <strong>C# Plugins, Custom Actions, and Web Resources (Vue.js)</strong>. 
-          Capable of handling tasks from design to implementation, solving technical problems, and ensuring system stability.
+          I am a Full Stack Developer with over 6 years of experience building and maintaining internal systems (CRM, LMS, ...).
+          I specialize in the <strong>Microsoft Power Platform</strong> and <strong>Oracle APEX</strong> ecosystems.
+          <br><br>
+          My focus is on making business processes run smoother by building custom logic, automating manual tasks, and ensuring systems connect seamlessly with each other.
+          I enjoy researching new ways to solve technical problems and often share what I learn with my team to keep everything running reliably, even when I'm away.
+          <br><br>
+          I'm comfortable working across the entire stack — from database design and backend security to custom frontend interfaces.
         </p>
       </section>
 
@@ -388,62 +335,28 @@
         <p class="sec-lbl">Technical Skills</p>
         <div>
           <div class="skill-row">
-            <span class="skill-cat">Backend &amp; Platform</span>
-            <div class="tags">
-              <span class="tag">Microsoft Dynamics 365</span>
-              <span class="tag">Dataverse</span>
-              <span class="tag">Power Platform</span>
-              <span class="tag">Oracle APEX</span>
-            </div>
+            <span class="skill-cat">CRM &amp; Platform</span>
+            <span class="skill-val"><strong>Microsoft Dynamics 365</strong>, Dataverse, <strong>Power Platform</strong>, <strong>Oracle APEX</strong>, Power Apps (Model-driven)</span>
           </div>
           <div class="skill-row">
-            <span class="skill-cat">Development</span>
-            <div class="tags">
-              <span class="tag">REST APIs</span>
-              <span class="tag">API Design</span>
-              <span class="tag">Data Processing</span>
-              <span class="tag">Plugin Development</span>
-            </div>
+            <span class="skill-cat">Backend</span>
+            <span class="skill-val"><strong>C# / .NET</strong>, Node.js, Laravel (PHP), Plugin Development, REST API Design</span>
           </div>
           <div class="skill-row">
-            <span class="skill-cat">Programming</span>
-            <div class="tags">
-              <span class="tag">C# / .NET</span>
-              <span class="tag">Node.js</span>
-              <span class="tag">Vue.js</span>
-              <span class="tag">PHP</span>
-              <span class="tag">PL/SQL</span>
-              <span class="tag">JavaScript</span>
-            </div>
+            <span class="skill-cat">Frontend</span>
+            <span class="skill-val">JavaScript, Vue.js, Web Resources, Dynamic Actions</span>
           </div>
           <div class="skill-row">
-            <span class="skill-cat">Databases</span>
-            <div class="tags">
-              <span class="tag">SQL Server</span>
-              <span class="tag">Oracle Database</span>
-              <span class="tag">MongoDB</span>
-              <span class="tag">MySQL</span>
-              <span class="tag">Redis</span>
-            </div>
+            <span class="skill-cat">Database</span>
+            <span class="skill-val"><strong>PL/SQL</strong>, SQL Server, MySQL, Oracle DB, MongoDB</span>
+          </div>
+          <div class="skill-row">
+            <span class="skill-cat">Integration</span>
+            <span class="skill-val"><strong>Power Automate</strong>, Custom Connector, FetchXML / LINQ, OData / RESTful, ORDS, XrmToolBox</span>
           </div>
           <div class="skill-row">
             <span class="skill-cat">Tools &amp; Infra</span>
-            <div class="tags">
-              <span class="tag">Docker</span>
-              <span class="tag">Nginx</span>
-              <span class="tag">Azure Functions</span>
-              <span class="tag">GitHub Actions</span>
-              <span class="tag">k6</span>
-            </div>
-          </div>
-          <div class="skill-row">
-            <span class="skill-cat">Integrations</span>
-            <div class="tags">
-              <span class="tag">OpenAI API</span>
-              <span class="tag">WebRTC / 3CX</span>
-              <span class="tag">SendGrid</span>
-              <span class="tag">Zalo ZNS</span>
-            </div>
+            <span class="skill-val">Docker, DBMS_SCHEDULER, SQL Developer, Azure Functions, GitHub Actions</span>
           </div>
         </div>
       </section>
@@ -454,71 +367,73 @@
       <section id="experience">
         <p class="sec-lbl">Experience</p>
 
+        <!-- VUS -->
         <div class="job" id="job-vus">
           <div class="job-top">
-            <span class="job-title">Backend Engineer &mdash; D365 &amp; Power Platform</span>
+            <span class="job-title">Full Stack / Web & Low-Code Developer</span>
             <span class="job-period">04/2023 &mdash; Present</span>
           </div>
           <div class="job-co">VUS &mdash; Vietnam USA Society English Centers &nbsp;&middot;&nbsp; Ho Chi Minh City</div>
           <ul class="job-list">
-            <li class="group-label">D365 &amp; Backend Development</li>
+
+            <li class="group-label">Core Edu CRM &mdash; Power Platform</li>
             <ul class="job-sublist">
-              <li>Built <strong>C# Plugins</strong> and <strong>Custom Actions</strong> to handle lead distribution to the ERP system.</li>
-              <li>Developed <strong>Dataverse Custom APIs</strong> to run backend logic without using a separate server.</li>
-              <li>Applied retry and idempotency to plugins to make the system more stable.</li>
-              <li>Used <strong>XrmToolBox</strong> and "Level Up for Dynamics 365" / "Dataverse REST Builder" for debugging and API testing.</li>
+              <li>Built <strong>C# Plugins &amp; Custom Workflow Activities</strong> running server-side on Dataverse to handle complex CRM business logic — student management, class scheduling, and data validation from <strong>Model-driven Apps</strong>.</li>
+              <li>Implemented <strong>Dataverse Custom APIs</strong> to expose reusable backend logic without a dedicated server; applied retry and idempotency patterns to ensure plugin stability.</li>
+              <li>Built <strong>Power Automate Cloud Flows</strong> with <strong>Custom Connectors</strong> for flexible external-system integration and token-based authentication management; scheduled Custom Action calls and automated Excel/SharePoint operations.</li>
+              <li>Designed system integrations through <strong>Custom API (OData/RESTful)</strong>; optimized large dataset queries using <strong>FetchXML</strong> and <strong>LINQ</strong>.</li>
+              <li>Performance & Cost Optimization: Engineered a migration of the Authentication Gateway from Power Automate to <strong>Azure Functions</strong>, resulting in significantly lower operational costs and enhanced system responsiveness.</li>
+              <li>Used <strong>XrmToolBox</strong> (Plugin Registration Tool, Ribbon Workbench, Form XML) for configuration, solution packaging, and live debugging.</li>
+              <li>Customized <strong>Model-driven App</strong> <strong>Forms &amp; Views</strong>; wrote <strong>JavaScript Web Resources</strong> to build highly custom logic interfaces embedded within CRM pages.</li>
+              <li>Proactively researched and learned new technologies to solve complex technical challenges and improve system performance.</li>
+              <li>Regularly conducted technical training and knowledge transfer to team members, ensuring the team can handle system operations and support independently.</li>
             </ul>
-            <li class="group-label">Web Resources (Vue.js)</li>
+
+            <li class="group-label">LMS Vhub &amp; Internal Operations &mdash; Oracle APEX</li>
             <ul class="job-sublist">
-              <li>Created a tele-sale CRM app using <strong>Vue.js on Web Resource</strong> — integrated <strong>WebRTC</strong> for in-app calling via a custom event adapter; built global search with Dataverse OData API and page-cookie infinite scroll.</li>
-              <li>Built a "Customer Snapshot" page to combine data from multiple sources into one Dataverse view.</li>
-              <li>Developed a KPI and performance report app with charts using live Dataverse data, replacing old Power BI reports.</li>
+              <li>Developed <strong>PL/SQL Packages, Procedures &amp; Functions</strong> to handle complex LMS business rules.</li>
+              <li>Applied <strong>Bulk Collect &amp; FORALL</strong> to process large datasets, reducing context switching and improving performance.</li>
+              <li>Used <strong>Native Dynamic SQL (EXECUTE IMMEDIATE)</strong> to build flexible queries based on runtime user inputs.</li>
+              <li>Implemented <strong>Database Triggers</strong> to enforce business constraints and maintain data consistency across the system.</li>
+              <li>Integrated <strong>SSO &amp; Multiple SSO</strong> to allow secure access via corporate accounts.</li>
+              <li>Designed a <strong>Role-Based Access Control (RBAC)</strong> model; created <strong>Custom Authorization Schemes</strong> to control visibility and actions at the page, region, and button levels.</li>
+              <li>Used <strong>Custom PL/SQL Packages with HTP.P</strong> to generate custom HTML components not natively supported by APEX.</li>
+              <li>Enhanced UI with <strong>JavaScript &amp; CSS</strong> for custom styling and client-side logic.</li>
+              <li>Implemented <strong>Dynamic Actions &amp; AJAX Callbacks</strong> to refresh data and run server-side logic without page reloads.</li>
+              <li>Automated daily tasks and background processes using <strong>Oracle APEX Automation</strong> and <strong>DBMS_SCHEDULER</strong>.</li>
+              <li>PWA Integration: Configured and deployed <strong>Progressive Web App (PWA)</strong> features, enabling app installation on mobile devices, offline capabilities, and improved mobile performance.</li>
+              <li>Developed and secured <strong>RESTful APIs (ORDS)</strong> to exchange data with external platforms and third-party services.</li>
+              <li>Debugged complex issues using <strong>DBMS_DEBUG</strong>; monitored user sessions via <strong>APEX Debug</strong>.</li>
+              <li>Used <strong>DBMS_PROFILER</strong> to identify slow PL/SQL code and bottleneck functions.</li>
+              <li>Trained team members on core system modules to ensure continuous operation and support during absence.</li>
             </ul>
-            <li class="group-label">Automation &amp; Integration</li>
-            <ul class="job-sublist">
-              <li>Used <strong>Power Automate</strong> as an API gateway to connect with external systems and manage tokens; also scheduled Custom Action calls and handled Excel/SharePoint operations and notifications.</li>
-              <li>Built a service using <strong>Node.js and MongoDB</strong> to sync statuses between CRM and social platforms for campaign CR tracking; extended with bulk email/SMS and segmentation tools.</li>
-              <li>Used <strong>Oracle APEX</strong> to build internal apps: a staff forum and an event management app with role-based access; used APEX REST APIs for cross-system integration.</li>
-            </ul>
+
           </ul>
-          <div class="tags">
-            <span class="tag hi">D365 Custom Action Plugin</span>
-            <span class="tag hi">Dataverse Custom API</span>
-            <span class="tag hi">Web Resource</span>
-            <span class="tag hi">Power Automate</span>
-            <span class="tag hi">XRM Service</span>
-            <span class="tag hi">XrmToolBox</span>
-            <span class="tag hi">Oracle APEX</span>
-            <span class="tag hi">Node.js</span>
-            <span class="tag hi">C# / .NET</span>
-            <span class="tag hi">Vue.js</span>
-            <span class="tag hi">Azure Functions</span>
-          </div>
         </div>
 
+        <!-- JVIT -->
         <div class="job" id="job-jvit">
           <div class="job-top">
-            <span class="job-title">Backend Engineer</span>
+            <span class="job-title">Backend Developer</span>
             <span class="job-period">03/2021 &mdash; 03/2023</span>
           </div>
           <div class="job-co">JVIT Tech &nbsp;&middot;&nbsp; Ho Chi Minh City</div>
           <ul class="job-list">
-            <li>Developed backend systems for real estate and social/chat applications.</li>
-            <li>Designed database schemas and backend architecture across multiple projects.</li>
-            <li>Led a small team handling task breakdown, progress tracking, and code review.</li>
-            <li>Introduced Docker for development environments, improving team consistency.</li>
-            <li>Implemented authentication flows and backend improvements to support business needs.</li>
+
+            <li class="group-label">Warehouse &amp; Logistics Management System</li>
+            <ul class="job-sublist">
+              <li>Owned the full <strong>MySQL database design</strong> covering Warehouse, Inventory, and Shipping Route modules.</li>
+              <li>Made system architecture and technical direction decisions; directly implemented core modules in <strong>Laravel &amp; Vue.js</strong>.</li>
+              <li>Built a robust <strong>RESTful API</strong> layer handling order logic, shipping route calculation, and real-time inventory management (inbound / outbound / stock).</li>
+              <li>Led the team in building an intuitive <strong>Single Page Application (SPA)</strong> with state management for real-time shipment and inventory tracking.</li>
+              <li>Introduced <strong>Docker</strong> for the development environment to ensure consistent, reproducible builds across all environments.</li>
+              <li>Conducted code reviews, established coding standards, and mentored junior developers.</li>
+            </ul>
+
           </ul>
-          <div class="tags">
-            <span class="tag hi">Node.js</span>
-            <span class="tag hi">PHP</span>
-            <span class="tag hi">MongoDB</span>
-            <span class="tag hi">MySQL</span>
-            <span class="tag hi">Docker</span>
-            <span class="tag hi">REST APIs</span>
-          </div>
         </div>
 
+        <!-- HDWebsoft -->
         <div class="job" id="job-hd">
           <div class="job-top">
             <span class="job-title">Fresher Web Developer</span>
@@ -530,15 +445,8 @@
             <li>Built admin modules, applied AJAX for dynamic UI interactions, and worked with relational databases.</li>
             <li>Gained hands-on experience in OOP, debugging, and Git-based workflows.</li>
           </ul>
-          <div class="tags">
-            <span class="tag hi">PHP</span>
-            <span class="tag hi">Laravel</span>
-            <span class="tag hi">CakePHP</span>
-            <span class="tag hi">JavaScript</span>
-            <span class="tag hi">jQuery</span>
-            <span class="tag hi">MySQL</span>
-          </div>
         </div>
+
       </section>
 
       <hr class="divider">
@@ -582,12 +490,10 @@
   <script>
   (function () {
 
-    /* Milestones: which element each dot aligns to */
     var milestones = [
-      { elId: 'job-vus',   label: '2023', always: false },
-      { elId: 'job-jvit',  label: '2021', always: false },
-      { elId: 'job-hd',    label: '2019', always: false },
-      { elId: 'education', label: '2015', always: false },
+      { elId: 'job-vus',  label: '2023', always: false },
+      { elId: 'job-jvit', label: '2021', always: false },
+      { elId: 'job-hd',   label: '2019', always: false },
     ];
 
     var content = document.getElementById('content');
@@ -599,25 +505,18 @@
       milestones.forEach(function (m) {
         var el = document.getElementById(m.elId);
         if (!el) return;
-
-        /* Distance from #content top edge to element top edge */
         var relTop = el.offsetTop;
-
         var wrap = document.createElement('div');
         wrap.className = 'tl-mark' + (m.always ? ' lit' : '');
         wrap.style.top = relTop + 'px';
-
         var yr = document.createElement('div');
         yr.className = 'yr';
         yr.textContent = m.label;
-
         var dot = document.createElement('div');
         dot.className = 'dot';
-
         wrap.appendChild(yr);
         wrap.appendChild(dot);
         content.appendChild(wrap);
-
         if (!m.always) marks.push({ wrap: wrap, elId: m.elId });
       });
     }
@@ -657,7 +556,6 @@
       if (el) obs.observe(el);
     });
 
-    /* Click on TOC immediately sets active, in case section is near page bottom */
     Object.keys(tocMap).forEach(function (id) {
       var link = tocMap[id];
       if (!link) return;
