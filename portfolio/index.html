@@ -305,10 +305,19 @@
 
       .exp-achievements li,
       .exp-desc,
-      .summary p { orphans: 3; widows: 3; }
+      .summary p { orphans: 2; widows: 2; }
 
-      .exp-entry { page-break-inside: avoid; }
-      .section { page-break-inside: avoid; }
+      /* Only avoid breaking inside small atomic elements, not large blocks */
+      .exp-header       { page-break-inside: avoid; break-inside: avoid; }
+      .edu-entry        { page-break-inside: avoid; break-inside: avoid; }
+      .exp-achievements li { page-break-inside: avoid; break-inside: avoid; }
+
+      /* Let large entries and sections flow naturally across pages */
+      .exp-entry  { page-break-inside: auto; break-inside: auto; }
+      .section    { page-break-inside: auto; break-inside: auto; }
+
+      /* Prevent orphaned dividers at the top of a new page */
+      .exp-divider { page-break-after: avoid; break-after: avoid; }
     }
 
     /* ── Responsive ── */
