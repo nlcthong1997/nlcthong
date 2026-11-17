@@ -123,8 +123,8 @@
     /* ── Skills Grid ── */
     .skills-grid {
       display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: .3em 2.5em;
+      grid-template-columns: 1fr 1.15fr;
+      gap: .3em 1.8em;
       font-size: .95em;
     }
 
@@ -214,8 +214,23 @@
 
     .exp-achievements li strong { color: var(--black); font-weight: 600; }
 
-    .exp-header + .exp-achievements,
-    .exp-meta + .exp-achievements { margin-top: .3em; }
+    .exp-desc + .exp-achievements { margin-top: .35em; }
+
+    /* ── Job (employer) block ── */
+    .job + .job { margin-top: 1.3em; }
+    .job-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: .3em 1em;
+      padding-bottom: .35em;
+      margin-bottom: .7em;
+      border-bottom: 1px solid var(--border);
+    }
+    .job-role { font-size: 1.1em; font-weight: 700; color: var(--black); }
+    .job-company { color: var(--mid); }
+    .job-header + .exp-achievements { margin-top: 0; }
+    .exp-domain { font-weight: 400; font-style: italic; color: var(--light); font-size: .9em; }
 
     /* ── Divider between experiences ── */
     .exp-divider {
@@ -255,7 +270,7 @@
     @media screen and (max-width: 480px) {
       .page { padding: 20px 16px 28px; }
       .header-left h1 { font-size: 1.65em; }
-      .exp-header, .edu-entry { flex-direction: column; gap: 0; }
+      .exp-header, .edu-entry, .job-header { flex-direction: column; gap: 0; }
       .exp-meta .sep { display: none; }
       .exp-meta .domain-wrap { display: block; }
     }
@@ -278,7 +293,7 @@
         -webkit-box-decoration-break: clone;
         box-decoration-break: clone;
         box-shadow: none;
-        font-size: 9.3pt;
+        font-size: 9.8pt;
         line-height: 1.4;
       }
 
@@ -289,6 +304,7 @@
       .exp-achievements li { margin-bottom: .15em; }
       .exp-achievements-title { margin-top: .4em; margin-bottom: .2em; }
       .exp-divider { margin: .75em 0; }
+      .job + .job { margin-top: 1em; }
 
       a { color: inherit; }
 
@@ -297,7 +313,8 @@
       .exp-header,
       .exp-meta,
       .exp-stack,
-      .exp-achievements-title { break-after: avoid; page-break-after: avoid; }
+      .job-header,
+      .exp-desc { break-after: avoid; page-break-after: avoid; }
 
       /* Never split a single line item or education row */
       .exp-achievements li,
@@ -390,112 +407,97 @@
   <section class="section">
     <div class="section-title">Professional Experience</div>
 
-    <!-- 1 -->
-    <div class="exp-entry">
-      <div class="exp-header">
-        <span class="exp-title">1. Educational CRM &amp; Enrollment Management System</span>
-        <span class="exp-period">2024 — Present</span>
+    <div class="job">
+      <div class="job-header">
+        <span><span class="job-role">Senior Web Developer</span> <span class="job-company">· VUS (Vietnam USA Society English Centers)</span></span>
+        <span class="exp-period">Mar 2023 — Present</span>
       </div>
-      <div class="exp-meta">VUS — Vietnam USA Society English Centers, Ho Chi Minh City<span class="sep">|</span><span class="domain-wrap"><strong>Domain:</strong> <span class="domain">Education</span></span></div>
-      <div class="exp-stack"><strong>Tech Stack:</strong> .NET (C#), Dataverse, Power Apps, Power Automate, Azure (Functions, Event Hubs, App Insights, App Service), VueJS, React, RESTful APIs, Claude Code, MCP</div>
-      <p class="exp-desc"><strong>Description:</strong> An enterprise CRM that streamlines school operations and sales — student and classroom management, automated enrollment, revenue distribution, and sales KPI dashboards.</p>
-      <div class="exp-achievements-title">Key Achievements &amp; Responsibilities</div>
-      <ul class="exp-achievements">
-        <li><strong>Architecture &amp; Integration:</strong> Modularized core domain logic (Enrollment, KPI) into isolated C# plugins with custom RESTful APIs, and streamed CRM events via Azure Event Hubs for high-throughput vendor integration.</li>
-        <li><strong>Log Optimization &amp; Cost Reduction:</strong> Redesigned logging for APIs serving 50K+ requests/day (full payloads only on failures, essential fields otherwise), cutting log volume by 60%+; built an AI-assisted cleanup job that removes ~100GB of junk logs per month, lowering storage costs.</li>
-        <li><strong>AI-Assisted Development:</strong> Used Claude Code to analyze the codebase, summarize business logic, and speed up feature delivery and root-cause diagnosis; built custom Vue/React pages and MCP servers for the CRM, and automated Jira technical docs via Claude connectors.</li>
-        <li><strong>Data Reconciliation:</strong> Built a nightly Azure Functions pipeline that cross-checks vendor data against CRM records and reports data drift daily.</li>
-        <li><strong>Reliability &amp; Monitoring:</strong> Added automatic retries, data resync tools, and App Insights alerting to detect API failures early.</li>
-      </ul>
+      <div class="exp-entry">
+        <div class="exp-header">
+          <span class="exp-title">Educational CRM &amp; Enrollment Management System <span class="exp-domain">· Education</span></span>
+          <span class="exp-period">2024 — Present</span>
+        </div>
+        <div class="exp-stack"><strong>Tech Stack:</strong> .NET (C#), Dataverse, Power Apps, Power Automate, Azure (Functions, Event Hubs, App Insights, App Service), VueJS, React, RESTful APIs, Claude Code, MCP</div>
+        <p class="exp-desc"><strong>Description:</strong> An enterprise CRM that streamlines school operations and sales — student and classroom management, automated enrollment, revenue distribution, and sales KPI dashboards.</p>
+        <ul class="exp-achievements">
+          <li><strong>Architecture &amp; Integration:</strong> Modularized core domain logic (Enrollment, KPI) into isolated C# plugins with custom RESTful APIs, and streamed CRM events via Azure Event Hubs for high-throughput vendor integration.</li>
+          <li><strong>Log Optimization &amp; Cost Reduction:</strong> Redesigned logging for APIs serving 50K+ requests/day (full payloads only on failures, essential fields otherwise), cutting log volume by 60%+; built an AI-assisted cleanup job that removes ~100GB of junk logs per month, lowering storage costs.</li>
+          <li><strong>AI-Assisted Development:</strong> Used Claude Code to analyze the codebase, summarize business logic, and speed up feature delivery and root-cause diagnosis; built custom Vue/React pages and MCP servers for the CRM, and automated Jira technical docs via Claude connectors.</li>
+          <li><strong>Data Reconciliation:</strong> Built a nightly Azure Functions pipeline that cross-checks vendor data against CRM records and reports data drift daily.</li>
+          <li><strong>Reliability &amp; Monitoring:</strong> Added automatic retries, data resync tools, and App Insights alerting to detect API failures early.</li>
+        </ul>
+      </div>
+      <hr class="exp-divider" />
+      <div class="exp-entry">
+        <div class="exp-header">
+          <span class="exp-title">Enterprise Learning Management System (LMS) <span class="exp-domain">· EdTech</span></span>
+          <span class="exp-period">Sep 2023 — Present</span>
+        </div>
+        <div class="exp-stack"><strong>Tech Stack:</strong> Oracle APEX, Oracle PL/SQL, RESTful APIs, Media Streaming APIs, Azure Blob Storage</div>
+        <p class="exp-desc"><strong>Description:</strong> An academic LMS that digitizes the classroom — curricula, lesson tracking, homework, teacher-student feedback, and automated attendance.</p>
+        <ul class="exp-achievements">
+          <li><strong>Query &amp; Page Load Optimization:</strong> Tuned complex PL/SQL queries and page-load logic, reducing rendering latency and web-tier overhead.</li>
+          <li><strong>Core Academic Engine:</strong> Built modules for curricula, lesson logs, homework, and teacher-student feedback.</li>
+          <li><strong>Media Storage &amp; Async Sync:</strong> Streamed parent-facing photos/videos from client to database, with background jobs offloading them to Azure Blob Storage.</li>
+          <li><strong>Allocation Engine:</strong> Built student-teacher-classroom allocation with real-time data ingestion from education and teacher management systems via RESTful APIs.</li>
+        </ul>
+      </div>
+      <hr class="exp-divider" />
+      <div class="exp-entry">
+        <div class="exp-header">
+          <span class="exp-title">Telesales Smart Module (CRM Extension) <span class="exp-domain">· EdTech / Sales Automation</span></span>
+          <span class="exp-period">May 2025 — Aug 2025</span>
+        </div>
+        <div class="exp-stack"><strong>Tech Stack:</strong> VueJS, Dataverse/CRM Web Resources, Xrm Queries, OpenAI API, MCP, RESTful APIs</div>
+        <p class="exp-desc"><strong>Description:</strong> A CRM telesales module with web-based calling, AI-generated student briefs, and automated post-call logging.</p>
+        <ul class="exp-achievements">
+          <li><strong>AI Student Briefs:</strong> Personalized call briefs (OpenAI API) from student data and Operations-published promotions, cached per student — saving agents 1+ minutes of prep per call.</li>
+          <li><strong>Lead Prioritization:</strong> Default filters surface the hottest leads so agents can call or skip instantly.</li>
+          <li><strong>AI-Driven Delivery:</strong> Built the module with AI end-to-end — MCP servers, filter components, UI, and tests.</li>
+          <li><strong>Telephony &amp; Multi-Tab Sync:</strong> Embedded vendor calling widgets with auto call logging and AI post-call summaries; synced call state across tabs via BroadcastChannel.</li>
+        </ul>
+      </div>
+      <hr class="exp-divider" />
+      <div class="exp-entry">
+        <div class="exp-header">
+          <span class="exp-title">Employee Insight &amp; Engagement Platform <span class="exp-domain">· HRTech</span></span>
+          <span class="exp-period">Mar 2023 — Sep 2023</span>
+        </div>
+        <div class="exp-stack"><strong>Tech Stack:</strong> Oracle APEX, Oracle PL/SQL, AJAX Callbacks, SSO, Workspace Session Sharing</div>
+        <p class="exp-desc"><strong>Description:</strong> An employee engagement platform for company-wide feedback forms, peer-to-peer appreciation, and a multi-level HR approval CMS.</p>
+        <ul class="exp-achievements">
+          <li><strong>Architecture &amp; Auth:</strong> Sole developer — designed the schema and Oracle APEX architecture, with multi-app session sharing and SSO.</li>
+          <li><strong>Dynamic Forms:</strong> Built responsive dynamic forms with PL/SQL and AJAX callbacks, minimizing frontend-to-database latency.</li>
+          <li><strong>RBAC &amp; Approval Workflows:</strong> Built granular RBAC and multi-level approval workflows with file uploads and email notifications.</li>
+        </ul>
+      </div>
     </div>
 
-    <hr class="exp-divider" />
-
-    <!-- 2 -->
-    <div class="exp-entry">
-      <div class="exp-header">
-        <span class="exp-title">2. Enterprise Learning Management System (LMS)</span>
-        <span class="exp-period">Sep 2023 — Present</span>
-      </div>
-      <div class="exp-meta">VUS — Vietnam USA Society English Centers, Ho Chi Minh City<span class="sep">|</span><span class="domain-wrap"><strong>Domain:</strong> <span class="domain">EdTech / Education Management</span></span></div>
-      <div class="exp-stack"><strong>Tech Stack:</strong> Oracle APEX, Oracle PL/SQL, RESTful APIs, Media Streaming APIs, Azure Blob Storage</div>
-      <p class="exp-desc"><strong>Description:</strong> An academic-focused LMS designed to fully digitize the classroom ecosystem — serving as a centralized hub for course curricula, daily lesson tracking, homework management, interactive teacher-student feedback, and automated attendance workflows.</p>
-      <div class="exp-achievements-title">Key Achievements &amp; Responsibilities</div>
-      <ul class="exp-achievements">
-        <li><strong>Query &amp; Page Load Optimization:</strong> Tuned complex Oracle PL/SQL transactional queries and refined page-load logic, reducing data rendering latency and minimizing web tier overhead.</li>
-        <li><strong>Core Academic Engine:</strong> Developed modules for comprehensive academic tracking including course curricula, lesson logs, homework assignments, and teacher-student feedback loops.</li>
-        <li><strong>Media Storage &amp; Async Sync:</strong> Engineered a scalable media handling workflow for parent monitoring features; built a mechanism to stream photos/videos from client to database and developed background sync jobs to offload to Azure Blob Storage.</li>
-        <li><strong>Data Integration &amp; Scheduling:</strong> Architected the student-teacher-classroom allocation engine by orchestrating real-time data ingestion from disparate education and teacher management systems via RESTful APIs.</li>
-      </ul>
-    </div>
-
-    <hr class="exp-divider" />
-
-    <!-- 3 -->
-    <div class="exp-entry">
-      <div class="exp-header">
-        <span class="exp-title">3. Telesales Smart Module (CRM Extension)</span>
-        <span class="exp-period">May 2025 — Aug 2025</span>
-      </div>
-      <div class="exp-meta">VUS — Vietnam USA Society English Centers, Ho Chi Minh City<span class="sep">|</span><span class="domain-wrap"><strong>Domain:</strong> <span class="domain">Telecommunications / CRM &amp; Sales Automation</span></span></div>
-      <div class="exp-stack"><strong>Tech Stack:</strong> VueJS, Dataverse/CRM Web Resources, Xrm Queries, OpenAI API, MCP, RESTful APIs</div>
-      <p class="exp-desc"><strong>Description:</strong> A CRM telesales module with web-based calling, AI-generated student briefs, and automated post-call logging.</p>
-      <div class="exp-achievements-title">Key Achievements &amp; Responsibilities</div>
-      <ul class="exp-achievements">
-        <li><strong>AI Student Briefs:</strong> Personalized call briefs (OpenAI API) from student data and Operations-published promotions, cached per student — saving agents 1+ minutes of prep per call.</li>
-        <li><strong>Lead Prioritization:</strong> Default filters surface the hottest leads so agents can call or skip instantly.</li>
-        <li><strong>AI-Driven Delivery:</strong> Built the module with AI end-to-end — MCP servers, filter components, UI, and tests.</li>
-        <li><strong>Telephony &amp; Multi-Tab Sync:</strong> Embedded vendor calling widgets with auto call logging and AI post-call summaries; synced call state across tabs via BroadcastChannel.</li>
-      </ul>
-    </div>
-
-    <hr class="exp-divider" />
-
-    <!-- 4 -->
-    <div class="exp-entry">
-      <div class="exp-header">
-        <span class="exp-title">4. Employee Insight &amp; Engagement Platform</span>
-        <span class="exp-period">Mar 2023 — Sep 2023</span>
-      </div>
-      <div class="exp-meta">VUS — Vietnam USA Society English Centers, Ho Chi Minh City<span class="sep">|</span><span class="domain-wrap"><strong>Domain:</strong> <span class="domain">HRTech / Corporate Governance &amp; C&amp;B</span></span></div>
-      <div class="exp-stack"><strong>Tech Stack:</strong> Oracle APEX, Oracle PL/SQL, AJAX Callbacks, SSO, Workspace Session Sharing</div>
-      <p class="exp-desc"><strong>Description:</strong> A centralized employee engagement platform to digitize internal corporate activities — managing company-wide dynamic feedback forms, peer-to-peer appreciation, and a multi-level approval CMS for HR.</p>
-      <div class="exp-achievements-title">Key Achievements &amp; Responsibilities</div>
-      <ul class="exp-achievements">
-        <li><strong>Architecture &amp; Auth:</strong> Sole developer who designed the relational schema and architected the Oracle APEX platform, implementing multi-app session sharing and seamless SSO integration.</li>
-        <li><strong>Asynchronous Web Engineering:</strong> Utilized PL/SQL and AJAX Callbacks to build responsive dynamic forms, minimizing frontend-to-database latency.</li>
-        <li><strong>RBAC &amp; Process Automation:</strong> Built a granular RBAC framework and automated multi-level approval workflows with integrated file upload and email notifications.</li>
-      </ul>
-    </div>
-
-    <hr class="exp-divider" />
-
-    <!-- 5 -->
-    <div class="exp-entry">
-      <div class="exp-header">
-        <span class="exp-title">5. Distributed Logistics &amp; Management System</span>
+    <div class="job">
+      <div class="job-header">
+        <span><span class="job-role">Software Developer</span> <span class="job-company">· JVIT Company</span></span>
         <span class="exp-period">Mar 2021 — Mar 2023</span>
       </div>
-      <div class="exp-meta">JVIT Company, Ho Chi Minh City<span class="sep">|</span><span class="domain-wrap"><strong>Domain:</strong> <span class="domain">Logistics &amp; Supply Chain</span></span></div>
-      <div class="exp-stack"><strong>Tech Stack:</strong> PHP Laravel, VueJS, RabbitMQ, MySQL, Docker, WebSockets, RESTful APIs</div>
-      <p class="exp-desc"><strong>Description:</strong> A logistics platform designed with decoupled service hubs, asynchronous inventory updates, and secure cross-center data access.</p>
-      <div class="exp-achievements-title">Key Achievements &amp; Responsibilities</div>
-      <ul class="exp-achievements">
-        <li><strong>Distributed Hub Architecture:</strong> Partitioned a legacy monolith into isolated operational centers, optimizing multi-tenant database boundaries.</li>
-        <li><strong>Asynchronous Message Integration:</strong> Integrated RabbitMQ with Dead Letter Queues (DLQ) to handle high-volume inventory sync and vehicle state events asynchronously.</li>
-        <li><strong>Security &amp; Real-Time Streaming:</strong> Enforced CORS whitelisting and XSS sanitization across hubs; built live dashboards using WebSockets to optimize report query performance.</li>
-      </ul>
+      <div class="exp-entry">
+        <div class="exp-header">
+          <span class="exp-title">Distributed Logistics &amp; Management System <span class="exp-domain">· Logistics &amp; Supply Chain</span></span>
+          <span class="exp-period">Mar 2021 — Mar 2023</span>
+        </div>
+        <div class="exp-stack"><strong>Tech Stack:</strong> PHP Laravel, VueJS, RabbitMQ, MySQL, Docker, WebSockets, RESTful APIs</div>
+        <p class="exp-desc"><strong>Description:</strong> A logistics platform with decoupled service hubs, asynchronous inventory updates, and secure cross-center data access.</p>
+        <ul class="exp-achievements">
+          <li><strong>Distributed Hub Architecture:</strong> Partitioned a legacy monolith into isolated operational centers with clear multi-tenant database boundaries.</li>
+          <li><strong>Asynchronous Messaging:</strong> Used RabbitMQ with Dead Letter Queues to reliably process high-volume inventory sync and vehicle state events.</li>
+          <li><strong>Security &amp; Real-Time Dashboards:</strong> Enforced CORS whitelisting and XSS sanitization across hubs; built live WebSocket dashboards to speed up reporting.</li>
+        </ul>
+      </div>
     </div>
 
-    <hr class="exp-divider" />
-
-    <!-- 6 -->
-    <div class="exp-entry">
-      <div class="exp-header">
-        <span class="exp-title">Web Developer</span>
+    <div class="job">
+      <div class="job-header">
+        <span><span class="job-role">Web Developer</span> <span class="job-company">· HDWebsoft</span></span>
         <span class="exp-period">May 2019 — Sep 2020</span>
       </div>
-      <div class="exp-meta">HDWebsoft, Ho Chi Minh City</div>
       <ul class="exp-achievements">
         <li>Developed responsive admin modules and dynamic application features utilizing PHP (Laravel) and jQuery/AJAX.</li>
       </ul>
