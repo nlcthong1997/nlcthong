@@ -18,43 +18,69 @@
       --light:   #888888;
       --border:  #dddddd;
       --bg:      #ffffff;
-      --accent:  #111111;
       --page-w:  860px;
     }
 
+    html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+
     body {
       font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-      font-size: 13.5px;
-      line-height: 1.65;
       color: var(--dark);
       background: #f0f0f0;
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
     }
 
-    /* ── Page wrapper ── */
+    /* ── Toolbar (screen only) ── */
+    .toolbar {
+      max-width: var(--page-w);
+      margin: 20px auto 10px;
+      display: flex;
+      justify-content: flex-end;
+      gap: 8px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      font: 500 13px/1 'Inter', sans-serif;
+      color: #fff;
+      background: var(--black);
+      border: 1px solid var(--black);
+      border-radius: 6px;
+      padding: 9px 14px;
+      text-decoration: none;
+      cursor: pointer;
+      transition: opacity .15s;
+    }
+    .btn:hover { opacity: .85; }
+    .btn svg { width: 15px; height: 15px; flex-shrink: 0; }
+
+    /* ── Page wrapper ── all sizes below are em, relative to this font-size ── */
     .page {
       max-width: var(--page-w);
-      margin: 32px auto;
+      margin: 0 auto 32px;
       background: var(--bg);
       box-shadow: 0 2px 20px rgba(0,0,0,.12);
-      padding: 52px 56px 60px;
+      padding: 44px 52px 48px;
+      font-size: 13px;
+      line-height: 1.55;
     }
 
     /* ── Header ── */
     .header {
       border-bottom: 2px solid var(--black);
-      padding-bottom: 18px;
-      margin-bottom: 28px;
+      padding-bottom: 1em;
+      margin-bottom: 1.5em;
       display: flex;
       justify-content: space-between;
       align-items: flex-end;
-      gap: 16px;
-      flex-wrap: wrap;
+      gap: 1em;
     }
 
     .header-left h1 {
-      font-size: 26px;
+      font-size: 2em;
       font-weight: 700;
       letter-spacing: -.3px;
       color: var(--black);
@@ -62,284 +88,235 @@
     }
 
     .header-left .title {
-      font-size: 11px;
+      font-size: .82em;
       font-weight: 500;
-      letter-spacing: 2.8px;
+      letter-spacing: .25em;
       text-transform: uppercase;
       color: var(--light);
-      margin-top: 5px;
+      margin-top: .35em;
     }
 
     .header-right {
       text-align: right;
-      font-size: 12.5px;
+      font-size: .94em;
       color: var(--mid);
-      line-height: 1.8;
+      line-height: 1.65;
     }
 
-    .header-right a {
-      color: var(--mid);
-      text-decoration: none;
-    }
-
+    .header-right a { color: var(--mid); text-decoration: none; }
     .header-right a:hover { text-decoration: underline; }
 
     /* ── Section ── */
-    .section { margin-bottom: 26px; }
+    .section { margin-bottom: 1.4em; }
+    .section:last-child { margin-bottom: 0; }
 
     .section-title {
-      font-size: 10px;
+      font-size: .77em;
       font-weight: 600;
-      letter-spacing: 2.5px;
+      letter-spacing: .25em;
       text-transform: uppercase;
       color: var(--light);
       border-bottom: 1px solid var(--border);
-      padding-bottom: 5px;
-      margin-bottom: 14px;
+      padding-bottom: .4em;
+      margin-bottom: 1em;
     }
 
     /* ── Summary ── */
-    .summary p {
-      font-size: 13px;
-      color: var(--dark);
-      line-height: 1.75;
-    }
+    .summary p { color: var(--dark); line-height: 1.65; }
 
     /* ── Skills Grid ── */
     .skills-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
-      gap: 5px 40px;
+      gap: .3em 2.5em;
+      font-size: .95em;
     }
 
-    .skill-row {
-      display: flex;
-      gap: 6px;
-      font-size: 12.5px;
-      align-items: baseline;
-    }
-
-    .skill-label {
-      font-weight: 600;
-      color: var(--black);
-      font-size: 12.5px;
-      flex-shrink: 0;
-    }
-
-    .skill-label::after {
-      content: ':';
-    }
-
-    .skill-value {
-      color: var(--mid);
-      font-size: 12.5px;
-    }
-
-    .skill-row--full {
-      grid-column: 1 / -1;
-    }
+    .skill-row { line-height: 1.5; }
+    .skill-row--full { grid-column: 1 / -1; }
+    .skill-label { font-weight: 600; color: var(--black); }
+    .skill-label::after { content: ':'; }
+    .skill-value { color: var(--mid); }
 
     /* ── Experience Entry ── */
-    .exp-entry { margin-bottom: 22px; }
-    .exp-entry:last-child { margin-bottom: 0; }
+    .exp-entry { margin: 0; }
 
     .exp-header {
       display: flex;
       justify-content: space-between;
       align-items: baseline;
-      flex-wrap: wrap;
-      gap: 4px;
-      margin-bottom: 2px;
+      gap: .3em 1em;
+      margin-bottom: .1em;
     }
 
     .exp-title {
-      font-size: 13.5px;
+      font-size: 1.04em;
       font-weight: 600;
       color: var(--black);
     }
 
     .exp-period {
-      font-size: 11.5px;
+      font-size: .88em;
       color: var(--light);
       font-style: italic;
       white-space: nowrap;
     }
 
-    .exp-meta {
-      font-size: 12px;
-      color: var(--mid);
-      margin-bottom: 4px;
-    }
-
-    .exp-meta .domain {
-      font-style: italic;
-    }
-
+    .exp-meta,
     .exp-stack {
-      font-size: 11.5px;
+      font-size: .92em;
       color: var(--mid);
-      margin-bottom: 6px;
+      margin-bottom: .15em;
     }
 
-    .exp-stack strong {
-      color: var(--dark);
-      font-weight: 600;
+    .exp-meta .domain { font-style: italic; }
+    .exp-meta .sep { color: var(--border); margin: 0 .35em; }
+
+    .exp-meta strong,
+    .exp-stack strong,
+    .exp-desc strong {
+      font-weight: 700;
+      color: var(--black);
     }
 
     .exp-desc {
-      font-size: 12.5px;
+      font-size: .95em;
       color: var(--mid);
-      margin-bottom: 8px;
-      line-height: 1.65;
+      margin-top: .3em;
+      line-height: 1.55;
     }
 
-    .exp-achievements { padding-left: 0; list-style: none; }
+    .exp-achievements-title {
+      font-size: .92em;
+      font-weight: 700;
+      color: var(--black);
+      margin-top: .55em;
+      margin-bottom: .3em;
+    }
+
+    .exp-achievements { list-style: none; font-size: .95em; }
 
     .exp-achievements li {
-      font-size: 12.5px;
       color: var(--dark);
-      padding-left: 14px;
+      padding-left: 1.1em;
       position: relative;
-      margin-bottom: 5px;
-      line-height: 1.62;
+      margin-bottom: .25em;
+      line-height: 1.5;
     }
+    .exp-achievements li:last-child { margin-bottom: 0; }
 
     .exp-achievements li::before {
       content: '';
       position: absolute;
-      left: 1px;
-      top: 7px;
+      left: .1em;
+      top: .62em;
       width: 4px;
       height: 4px;
       background: var(--dark);
       border-radius: 50%;
-      flex-shrink: 0;
     }
 
-    .exp-achievements li strong {
-      color: var(--black);
-      font-weight: 600;
-    }
+    .exp-achievements li strong { color: var(--black); font-weight: 600; }
 
-    .exp-meta-label {
-      font-size: 12px;
-      font-weight: 700;
-      color: var(--black);
-    }
+    .exp-header + .exp-achievements,
+    .exp-meta + .exp-achievements { margin-top: .3em; }
 
-    .exp-stack strong {
-      font-size: 12px;
-      font-weight: 700;
-      color: var(--black);
+    /* ── Divider between experiences ── */
+    .exp-divider {
+      border: none;
+      border-top: 1px dashed var(--border);
+      margin: 1em 0;
     }
-
-    .exp-desc-label {
-      font-size: 12px;
-      font-weight: 700;
-      color: var(--black);
-    }
-
-    .exp-achievements-title {
-      font-size: 12px;
-      font-weight: 700;
-      color: var(--black);
-      margin-top: 10px;
-      margin-bottom: 7px;
-      display: block;
-    }
-
-    /* ── Sub-bullet (nested) ── */
-    .exp-sub { margin-top: 4px; padding-left: 20px; list-style: none; }
-    .exp-sub li {
-      font-size: 12px;
-      color: var(--mid);
-      margin-bottom: 2px;
-      padding-left: 14px;
-      position: relative;
-    }
-    .exp-sub li::before { content: '·'; position: absolute; left: 0; }
 
     /* ── Education ── */
     .edu-entry {
       display: flex;
       justify-content: space-between;
       align-items: baseline;
-      flex-wrap: wrap;
-      gap: 4px;
-      margin-bottom: 10px;
+      gap: .3em 1em;
+      margin-bottom: .6em;
     }
+    .edu-entry:last-child { margin-bottom: 0; }
 
-    .edu-left {}
-
-    .edu-degree {
-      font-size: 13px;
-      font-weight: 700;
-      color: var(--black);
-    }
-
-    .edu-school {
-      font-size: 12px;
-      color: var(--mid);
-    }
-
+    .edu-degree { font-weight: 700; color: var(--black); }
+    .edu-school { font-size: .92em; color: var(--mid); }
     .edu-period {
-      font-size: 11.5px;
+      font-size: .88em;
       color: var(--light);
       font-style: italic;
       white-space: nowrap;
     }
 
-    /* ── Divider between experiences ── */
-    .exp-divider {
-      border: none;
-      border-top: 1px dashed var(--border);
-      margin: 18px 0;
+    /* ── Responsive (screen only — must not affect printing) ── */
+    @media screen and (max-width: 720px) {
+      .toolbar { margin: 0; padding: 12px 16px; background: #fff; border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 10; }
+      .page { padding: 24px 20px 32px; margin: 0; box-shadow: none; font-size: 14px; }
+      .header { flex-direction: column; align-items: flex-start; gap: .6em; }
+      .header-right { text-align: left; }
+      .skills-grid { grid-template-columns: 1fr; gap: .45em; }
     }
 
-    /* ── Print ── */
+    @media screen and (max-width: 480px) {
+      .page { padding: 20px 16px 28px; }
+      .header-left h1 { font-size: 1.65em; }
+      .exp-header, .edu-entry { flex-direction: column; gap: 0; }
+      .exp-meta .sep { display: none; }
+      .exp-meta .domain-wrap { display: block; }
+    }
+
+    /* ── Print / PDF ── */
+    @page { size: A4; margin: 10mm 12mm; }
+
     @media print {
       body { background: #fff; }
+      .toolbar { display: none !important; }
 
       .page {
+        max-width: none;
         margin: 0;
-        padding: 30px 36px 36px;
+        padding: 0;
         box-shadow: none;
-        max-width: 100%;
+        font-size: 9.3pt;
+        line-height: 1.4;
       }
 
+      .header { padding-bottom: .8em; margin-bottom: 1.1em; }
+      .section { margin-bottom: 1.1em; }
+      .section-title { margin-bottom: .7em; }
+      .summary p, .exp-desc, .exp-achievements li { line-height: 1.42; }
+      .exp-achievements li { margin-bottom: .15em; }
+      .exp-achievements-title { margin-top: .4em; margin-bottom: .2em; }
+      .exp-divider { margin: .75em 0; }
+
+      a { color: inherit; }
+
+      /* Keep headings together with the content that follows them */
+      .section-title,
+      .exp-header,
+      .exp-meta,
+      .exp-stack,
+      .exp-achievements-title { break-after: avoid; page-break-after: avoid; }
+
+      /* Never split a single line item or education row */
       .exp-achievements li,
+      .edu-entry,
+      .skill-row,
+      .header { break-inside: avoid; page-break-inside: avoid; }
+
       .exp-desc,
-      .summary p { orphans: 2; widows: 2; }
-
-      /* Only avoid breaking inside small atomic elements, not large blocks */
-      .exp-header       { page-break-inside: avoid; break-inside: avoid; }
-      .edu-entry        { page-break-inside: avoid; break-inside: avoid; }
-      .exp-achievements li { page-break-inside: avoid; break-inside: avoid; }
-
-      /* Let large entries and sections flow naturally across pages */
-      .exp-entry  { page-break-inside: auto; break-inside: auto; }
-      .section    { page-break-inside: auto; break-inside: auto; }
-
-      /* Prevent orphaned dividers at the top of a new page */
-      .exp-divider { page-break-after: avoid; break-after: avoid; }
-    }
-
-    /* ── Responsive ── */
-    @media (max-width: 720px) {
-      .page { padding: 28px 24px 36px; margin: 0; box-shadow: none; }
-      .header { flex-direction: column; align-items: flex-start; }
-      .header-right { text-align: left; }
-      .skills-grid { grid-template-columns: 1fr; }
-    }
-
-    @media (max-width: 480px) {
-      .page { padding: 20px 16px 28px; }
-      .header-left h1 { font-size: 22px; }
-      .exp-header { flex-direction: column; }
+      .summary p { orphans: 3; widows: 3; }
     }
   </style>
 </head>
 <body>
+
+<nav class="toolbar" aria-label="Actions">
+  <a class="btn" href="Thong-Nguyen-Lam-Chi-CV.pdf" download="Thong-Nguyen-Lam-Chi-CV.pdf">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+    Download PDF
+  </a>
+</nav>
+
 <div class="page">
 
   <!-- ══ HEADER ══ -->
@@ -359,14 +336,11 @@
   <section class="section summary">
     <div class="section-title">Summary</div>
     <p>
-      Software Engineer with over 6 years of experience designing, developing, and optimizing high-performance,
-      scalable enterprise applications. Experienced in building business management and educational systems using
-      Microsoft and Oracle ecosystems. Adept at architecting Modular Monolith systems by encapsulating domain logic
-      into isolated plugins and orchestrating communication via event triggers and hubs for asynchronous integration —
-      demonstrated through large-scale enterprise digital transformation projects ensuring seamless operations with
-      minimal errors and high scalability.
-      Passionate about evolving enterprise architectures and currently seeking opportunities to leverage my strong
-      foundational knowledge in Event-Driven systems and hands-on research of Microservices patterns.
+      Software Engineer with 6+ years of experience designing and building scalable, high-performance enterprise
+      applications across the Microsoft (.NET, Power Platform, Azure) and Oracle ecosystems. Delivered CRM, learning
+      management and business operation systems for large-scale digital transformation projects, with a strong focus
+      on modular architecture, reliable system integration and production stability. Currently deepening expertise in
+      Event-Driven Architecture and Microservices, and seeking opportunities to build and evolve distributed systems at scale.
     </p>
   </section>
 
@@ -415,12 +389,9 @@
         <span class="exp-title">1. Educational CRM &amp; Enrollment Management System</span>
         <span class="exp-period">2024 — Present</span>
       </div>
-      <div class="exp-meta">VUS — Vietnam USA Society English Centers, Ho Chi Minh City</div>
-      <div class="exp-meta"><strong class="exp-meta-label">Domain:</strong> <span class="domain">Education</span></div>
-      <div class="exp-stack">
-        <strong>Tech Stack:</strong> .NET (C#), Power Apps, Power Automate, Dataverse, Azure Function, App Insights, App Service, VueJS, RESTful APIs
-      </div>
-      <p class="exp-desc"><strong class="exp-desc-label">Description:</strong> An enterprise CRM system designed to optimize school operations and sales performance — featuring student and classroom management, automated enrollment workflows, revenue distribution, and sales KPI tracking via interactive dashboards.</p>
+      <div class="exp-meta">VUS — Vietnam USA Society English Centers, Ho Chi Minh City<span class="sep">|</span><span class="domain-wrap"><strong>Domain:</strong> <span class="domain">Education</span></span></div>
+      <div class="exp-stack"><strong>Tech Stack:</strong> .NET (C#), Power Apps, Power Automate, Dataverse, Azure Function, App Insights, App Service, VueJS, RESTful APIs</div>
+      <p class="exp-desc"><strong>Description:</strong> An enterprise CRM system designed to optimize school operations and sales performance — featuring student and classroom management, automated enrollment workflows, revenue distribution, and sales KPI tracking via interactive dashboards.</p>
       <div class="exp-achievements-title">Key Achievements &amp; Responsibilities</div>
       <ul class="exp-achievements">
         <li><strong>Architecture &amp; API Design:</strong> Modularized core domain logic (Enrollment, KPI tracking) into isolated C# plugin DLLs; developed custom RESTful APIs within the Dataverse plugin layer for external system integrations.</li>
@@ -440,12 +411,9 @@
         <span class="exp-title">2. Enterprise Learning Management System (LMS)</span>
         <span class="exp-period">Sep 2023 — Present</span>
       </div>
-      <div class="exp-meta">VUS — Vietnam USA Society English Centers, Ho Chi Minh City</div>
-      <div class="exp-meta"><strong class="exp-meta-label">Domain:</strong> <span class="domain">EdTech / Education Management</span></div>
-      <div class="exp-stack">
-        <strong>Tech Stack:</strong> Oracle APEX, Oracle PL/SQL, RESTful APIs, Media Streaming APIs, Azure Blob Storage
-      </div>
-      <p class="exp-desc"><strong class="exp-desc-label">Description:</strong> An academic-focused LMS designed to fully digitize the classroom ecosystem — serving as a centralized hub for course curricula, daily lesson tracking, homework management, interactive teacher-student feedback, and automated attendance workflows.</p>
+      <div class="exp-meta">VUS — Vietnam USA Society English Centers, Ho Chi Minh City<span class="sep">|</span><span class="domain-wrap"><strong>Domain:</strong> <span class="domain">EdTech / Education Management</span></span></div>
+      <div class="exp-stack"><strong>Tech Stack:</strong> Oracle APEX, Oracle PL/SQL, RESTful APIs, Media Streaming APIs, Azure Blob Storage</div>
+      <p class="exp-desc"><strong>Description:</strong> An academic-focused LMS designed to fully digitize the classroom ecosystem — serving as a centralized hub for course curricula, daily lesson tracking, homework management, interactive teacher-student feedback, and automated attendance workflows.</p>
       <div class="exp-achievements-title">Key Achievements &amp; Responsibilities</div>
       <ul class="exp-achievements">
         <li><strong>Query &amp; Page Load Optimization:</strong> Tuned complex Oracle PL/SQL transactional queries and refined page-load logic, reducing data rendering latency and minimizing web tier overhead.</li>
@@ -463,12 +431,9 @@
         <span class="exp-title">3. Telesales Smart Module (CRM Extension)</span>
         <span class="exp-period">May 2025 — Aug 2025</span>
       </div>
-      <div class="exp-meta">VUS — Vietnam USA Society English Centers, Ho Chi Minh City</div>
-      <div class="exp-meta"><strong class="exp-meta-label">Domain:</strong> <span class="domain">Telecommunications / CRM &amp; Sales Automation</span></div>
-      <div class="exp-stack">
-        <strong>Tech Stack:</strong> VueJS, Dataverse/CRM Web Resources, Xrm Queries, OpenAI API, RESTful APIs
-      </div>
-      <p class="exp-desc"><strong class="exp-desc-label">Description:</strong> A specialized telesales module within the CRM ecosystem to streamline agent workflows — orchestrating real-time web-based calling, automated script tracking, customer feedback loops, and automated post-call batch logging.</p>
+      <div class="exp-meta">VUS — Vietnam USA Society English Centers, Ho Chi Minh City<span class="sep">|</span><span class="domain-wrap"><strong>Domain:</strong> <span class="domain">Telecommunications / CRM &amp; Sales Automation</span></span></div>
+      <div class="exp-stack"><strong>Tech Stack:</strong> VueJS, Dataverse/CRM Web Resources, Xrm Queries, OpenAI API, RESTful APIs</div>
+      <p class="exp-desc"><strong>Description:</strong> A specialized telesales module within the CRM ecosystem to streamline agent workflows — orchestrating real-time web-based calling, automated script tracking, customer feedback loops, and automated post-call batch logging.</p>
       <div class="exp-achievements-title">Key Achievements &amp; Responsibilities</div>
       <ul class="exp-achievements">
         <li><strong>Multi-Tab State Synchronization:</strong> Designed a real-time cross-tab communication architecture using BroadcastChannel and Storage Events, resolving browser session conflicts and ensuring synchronized call states.</li>
@@ -485,12 +450,9 @@
         <span class="exp-title">4. Employee Insight &amp; Engagement Platform</span>
         <span class="exp-period">Mar 2023 — Sep 2023</span>
       </div>
-      <div class="exp-meta">VUS — Vietnam USA Society English Centers, Ho Chi Minh City</div>
-      <div class="exp-meta"><strong class="exp-meta-label">Domain:</strong> <span class="domain">HRTech / Corporate Governance &amp; C&amp;B</span></div>
-      <div class="exp-stack">
-        <strong>Tech Stack:</strong> Oracle APEX, Oracle PL/SQL, AJAX Callbacks, SSO, Workspace Session Sharing
-      </div>
-      <p class="exp-desc"><strong class="exp-desc-label">Description:</strong> A centralized employee engagement platform to digitize internal corporate activities — managing company-wide dynamic feedback forms, peer-to-peer appreciation (V-Cheer), and a multi-level approval CMS for HR.</p>
+      <div class="exp-meta">VUS — Vietnam USA Society English Centers, Ho Chi Minh City<span class="sep">|</span><span class="domain-wrap"><strong>Domain:</strong> <span class="domain">HRTech / Corporate Governance &amp; C&amp;B</span></span></div>
+      <div class="exp-stack"><strong>Tech Stack:</strong> Oracle APEX, Oracle PL/SQL, AJAX Callbacks, SSO, Workspace Session Sharing</div>
+      <p class="exp-desc"><strong>Description:</strong> A centralized employee engagement platform to digitize internal corporate activities — managing company-wide dynamic feedback forms, peer-to-peer appreciation, and a multi-level approval CMS for HR.</p>
       <div class="exp-achievements-title">Key Achievements &amp; Responsibilities</div>
       <ul class="exp-achievements">
         <li><strong>Architecture &amp; Auth:</strong> Sole developer who designed the relational schema and architected the Oracle APEX platform, implementing multi-app session sharing and seamless SSO integration.</li>
@@ -507,11 +469,9 @@
         <span class="exp-title">5. Distributed Logistics &amp; Management System</span>
         <span class="exp-period">Mar 2021 — Mar 2023</span>
       </div>
-      <div class="exp-meta"><strong class="exp-meta-label">Domain:</strong> <span class="domain">Logistics &amp; Supply Chain — JVIT Company, Ho Chi Minh City</span></div>
-      <div class="exp-stack">
-        <strong>Tech Stack:</strong> PHP Laravel, VueJS, RabbitMQ, MySQL, Docker, WebSockets, RESTful APIs
-      </div>
-      <p class="exp-desc"><strong class="exp-desc-label">Description:</strong> A logistics platform designed with decoupled service hubs, asynchronous inventory updates, and secure cross-center data access.</p>
+      <div class="exp-meta">JVIT Company, Ho Chi Minh City<span class="sep">|</span><span class="domain-wrap"><strong>Domain:</strong> <span class="domain">Logistics &amp; Supply Chain</span></span></div>
+      <div class="exp-stack"><strong>Tech Stack:</strong> PHP Laravel, VueJS, RabbitMQ, MySQL, Docker, WebSockets, RESTful APIs</div>
+      <p class="exp-desc"><strong>Description:</strong> A logistics platform designed with decoupled service hubs, asynchronous inventory updates, and secure cross-center data access.</p>
       <div class="exp-achievements-title">Key Achievements &amp; Responsibilities</div>
       <ul class="exp-achievements">
         <li><strong>Distributed Hub Architecture:</strong> Partitioned a legacy monolith into isolated operational centers, optimizing multi-tenant database boundaries.</li>
