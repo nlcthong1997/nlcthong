@@ -41,7 +41,10 @@
       display: grid;
       place-items: center;
       color: #b5b5b5;
+      border: 0;
       border-radius: 50%;
+      background: transparent;
+      cursor: pointer;
       text-decoration: none;
       transition: color .15s, background-color .15s;
     }
@@ -258,16 +261,22 @@
     }
 
     /* ── Print / PDF ── */
-    @page { size: A4; margin: 10mm 12mm; }
+    /* margin 0 leaves no room for the browser's date/URL headers & footers;
+       the page margin comes from .page padding, repeated on every page via box-decoration-break */
+    @page { size: A4; margin: 0; }
 
     @media print {
+      /* keep bullet dots even when "Background graphics" is unticked */
+      html, body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
       body { background: #fff; }
       .dl-btn { display: none !important; }
 
       .page {
         max-width: none;
         margin: 0;
-        padding: 0;
+        padding: 10mm 12mm;
+        -webkit-box-decoration-break: clone;
+        box-decoration-break: clone;
         box-shadow: none;
         font-size: 9.3pt;
         line-height: 1.4;
@@ -305,9 +314,9 @@
 
 <div class="page">
 
-  <a class="dl-btn" href="Thong-Nguyen-Lam-Chi-CV.pdf" download="Thong-Nguyen-Lam-Chi-CV.pdf" title="Download PDF" aria-label="Download PDF">
+  <button type="button" class="dl-btn" onclick="window.print()" title="Download PDF" aria-label="Download PDF">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-  </a>
+  </button>
 
   <!-- ══ HEADER ══ -->
   <header class="header">
@@ -511,5 +520,13 @@
   </section>
 
 </div>
+<script>
+  // "Save as PDF" uses the document title as the file name
+  (function () {
+    var t = document.title;
+    addEventListener('beforeprint', function () { document.title = 'Thong-Nguyen-Lam-Chi-CV'; });
+    addEventListener('afterprint', function () { document.title = t; });
+  })();
+</script>
 </body>
 </html>
